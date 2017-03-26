@@ -11,24 +11,31 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
+//设置view路径和模板
 app.set('views', path.join(__dirname, 'views'));
+//设置模板引擎
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use配置
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+//app.use静态文件路径
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', index);
-app.use('/users', users);
+  //404错误
+  var err = new Error('Not Found');
+  err.status = 404;
+  //路由模块的使用
+  app.use('/', index);
+  app.use('/users', users);
+  //静态文件路径
+  // app.use(express.static('public'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
   next(err);
 });
 

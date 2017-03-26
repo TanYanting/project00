@@ -1,0 +1,29 @@
+.navbar-wrapper .navbar{
+	border-radius: 6px;
+}
+.overflow-hidden{
+	overflow: hidden;
+}
+.jumbotron-wrapper .sm-right .fa{
+	float: right;
+	margin-left: 80px;
+}
+
+/*网页上的显示*/
+.sm-right{
+	padding-left:15px;
+	/*margin-left: 15px;*/
+	border-left:1px solid #ccc;
+}
+.xs-right{
+	display: none;
+}
+/*当页面太小时，即手机页面*/
+@media (max-width:767px ) {
+	.xs-right{
+		display: block;
+	}
+	.sm-right{
+		display: none;
+	}
+}

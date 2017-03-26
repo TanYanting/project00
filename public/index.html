@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>河道水质监测系统</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <!--font awesome-->
+    <link rel="stylesheet" type="text/css" href="plugins/font-awesome-4.7.0/css/font-awesome.css"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--mycss-->
+    <link rel="stylesheet" type="text/css" href="../stylesheets/pages.css"/>
+  </head>
+  <body>
+    <div class="container">
+			<!--navbar-wrapper start 导航-->
+			<div class="navbar-wrapper">
+	
+	        <nav class="navbar navbar-inverse navbar-static-top">
+	            <div class="navbar-header">
+	              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	              </button>
+	              <a class="navbar-brand" href="#">河道水质监测系统</a>
+	            </div>
+	            <div id="navbar" class="navbar-collapse collapse">
+	              <ul class="nav navbar-nav">
+	                <li class="active"><a href="#">主页</a></li>
+	                <li><a href="#about">信息录入</a></li>
+	                <li class="dropdown">
+	                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据中心 <span class="caret"></span></a>
+	                  <ul class="dropdown-menu">
+	                    <li class="dropdown-header">数据</li>
+	                    <li><a href="#">实时数据</a></li>
+	                    <li><a href="#">历史数据</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li class="dropdown-header">监测站</li>
+	                    <li><a href="#">站点数据</a></li>
+	                    <li><a href="#">站点管理管理</a></li>
+	                  </ul>
+	                </li>
+	                <li class="dropdown">
+	                	<a href="" class="dropdown-toggle" data-toggle="dropdown" role="butto">账户管理 <span class="caret"></span></a>
+	                	<ul class="dropdown-menu">
+	                		<li><a href="#">密码修改</a></li>
+	                		<li role="separator" class="divider"></li>
+	                		<li><a href="#">退出账号</a></li>
+	                	</ul>
+	                </li>
+	              </ul>
+	            </div>
+	        </nav>
+	
+	    </div>
+			<!--navbar-wapper end-->
+			
+			<!--jumbotron-wrapper start 巨幕-->
+			<div class="jumbotron-wrapper">
+				<div class="jumbotron overflow-hidden">
+					<div class="row">
+						<div class="col-sm-5 col-xs-12">
+							<h1 class="text-center stype">III类</h1>
+							<h4 class="text-center">水质</h4>
+							<p class="text-center"><i class="fa fa-map-marker"></i>&nbsp; <span class="area">浙江省湖州市青浦港</span></p>
+						</div>
+						<!--网页上的-->
+						<div class="col-sm-3 sm-right">
+							<h2>水温：<span class="temperature">2</span><i class="fa fa-angle-double-up"></i></h2>
+							<h2>&nbsp;&nbsp;PH：<span class="ph">2</span><i class="fa fa-angle-double-up"></i></h2>
+							<h2>气温：<span class="air-temperature">2</span><i class="fa fa-angle-double-up"></i></h2>
+						</div>
+						<!--手机上显示的右半边，采用列表展示-->
+					</div>
+				</div>
+				<div class="xs-right">
+							<ul class="list-group">
+							  <li class="list-group-item">
+							    <span class="badge"><i class="fa fa-angle-double-down"></i></span>
+							    	水温：<span class="temperature">2</span>
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><i class="fa fa-angle-double-down"></i></span>
+							    	&nbsp;&nbsp;PH：<span class="ph">2</span>
+							  </li>
+							  <li class="list-group-item">
+							    <span class="badge"><i class="fa fa-angle-double-down"></i></span>
+							    	气温：<span class="air-temperature">2</span>
+							  </li>
+							</ul>
+						</div>
+			</div>
+			<!--jumbutron-wrapper end-->
+    </div>
+		
+		
+		
+		
+		
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/dist//js/bootstrap.min.js"></script>
+  </body>
+</html>
