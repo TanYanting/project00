@@ -22,8 +22,38 @@
   	</head>
   	<body>
 		<!--登录模态框-->
-		<div class="modal-login-wrapper">
-
+		<div class="modal-login-wrapper modal fade" tabindex="-1" rolo="dialog" aria-activedescendant="loginWrapperLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form action="">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 id="loginWrapperLabel">登录</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="user_id">账号：</label>
+							<input type="text" class="form-control" id="user_id" placeholder="请输入账号">
+						</div>
+						<div class="form-group">
+							<label for="user_pwd">密码：</label>
+							<input type="text" class="form-control" id="user_pwd" placeholder="请输入密码">
+						</div>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox"> 记住密码
+							</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary">登录</button>
+					</div>
+					</form>
+				</div>
+			</div>
 		</div>
 		<!--container 容器-->
     	<div class="container">
@@ -62,6 +92,7 @@
 					  		<li class="dropdown hide">
 	                			<a href="" class="dropdown-toggle" data-toggle="dropdown" role="butto">账户管理 <span class="caret"></span></a>
 								<ul class="dropdown-menu">
+									<li class="hide"><a href="#">用户管理</a></li>
 									<li><a href="#">密码修改</a></li>
 	                				<li role="separator" class="divider"></li>
 	                				<li><a href="#">退出账号</a></li>
@@ -119,6 +150,8 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap/dist//js/bootstrap.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+	<!--login.js-->
+	<script src="javascript/login.js"></script>
   </body>
 </html>
