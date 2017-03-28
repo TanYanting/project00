@@ -3,12 +3,11 @@
  * 用于配置数据库
  */
 var mysql=require('mysql');
-var sql='select * from wuser';
-connection.query(sql,function (err,rows,fields) {
-    console.dir(arguments);
-    if(err) throw err;
-    for(var i=0,user;user=rows[i++];){
-        console.dir(user);
-    }
+var connection=mysql.createConnection({
+    host:'127.0.0.1',
+    user:'root',
+    password:'',
+    database:'wqm',
+    port:'3306'
 });
 module.exports=connection;
