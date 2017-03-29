@@ -1,20 +1,22 @@
 /**
  * Created by Ablion on 2017/3/27.
  */
+var user={}
 var login={
-    user:{},
-    init:function () {
 
+    init:function () {
+        $("#btn_login").on('click',this.vaildUser);
     },
     //登录验证——将数据
     vaildUser:function () {
-        this.user.uid=$("#user_id").val();
+        debugger;
+        user.uid= $("#user_id").val();
         $.ajax({
             type:'post',
-            url:'../../dao/loginRouter.js',
-            data:login.user.uid,
+            url:'/login',
+            data:{user_id:user.uid},
             success:function (xml) {
-                
+                console.dir(xml);
             }
         });
     },
