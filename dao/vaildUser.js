@@ -7,21 +7,22 @@ var connection=require('../conf/db');
 //sql语句
 var sql=require('./sql');
 
-module.exports=function (sql,data) {
+module.exports=function (sql,data,callback) {
     var rows={};
     //连接数据库
     connection.connect();
     //到数据库查询
     connection.query(sql,data,function (err,result) {
-        console.log('sql:'+sql+'\ndata:'+data);
-        console.dir('result:'+result);
-        if(result){
-            rows=result;
+        if(err) throw err;
+        rows={
+            code:200,
+            msg:'success',
+            data:result
+        }
+        if(callback && typeof(callback) === "function"){
+            callback(rows);
         }
     });
-    //断开连接
     connection.end();
-    //返回查询结果
-    return rows;
 }
 
