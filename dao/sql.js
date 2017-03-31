@@ -12,6 +12,18 @@ sql.wuser={
     updateFlag:'UPDATE wuser set login_flag=? WHERE user_id=?',//修改登陆状态
     delete:'DELETE FROM wuser WHERE user_id=?',//删除
     queryById:'SELECT * FROM wuser WHERE user_id=?',//根据ID查找
+    queryByName:'SELECT * FROM wuser WHERE user_name=?',//根据name查找
     queryAll:'SELECT * FROM wuser'
+}
+//监测站点表
+sql.site={
+    insert:'INSERT site(site_id,site_name,stype,state,uid,wid,aid) value(?,?,?,?,?,?,?)',
+    updateType:'UPDATE site set stype=? WHERE site_id=?',//修改水质标准
+    updateState:'UPDATE site set state=? WHERE site_id=?',//修改状态
+    updateUser:'UPDATE site set uid=? WHERE site_id=?',//修改负责人
+    delete:'DELETE FROM site WHERE site_id=?',//删除
+    queryById:'SELECT * FROM site WHERE site_id=?',//根据ID查找
+    queryByName:'SELECT * FROM site WHERE site_name=?',//根据name查找
+    queryAll:'SELECT * FROM site'
 }
 module.exports = sql;
