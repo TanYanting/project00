@@ -81,5 +81,8 @@ var login={
 login.init();
 //重新计算iframe的大小
 $(function () {
-
+    $("#inPage").on('load',function () {
+        let height=this.contentWindow.document.body.offsetHeight;
+        $(this).height(height);
+    });
 });
