@@ -10,6 +10,9 @@ module.exports=function (sql,data,callback) {
     var rows={};
     pool.getConnection(function (err,connection) {
         if(err) throw err;
+        if(data==''){
+
+        }
         //到数据库查询
         connection.query(sql,data,function (err,result) {
             if(err) throw err;

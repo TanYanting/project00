@@ -26,4 +26,26 @@ sql.site={
     queryByName:'SELECT * FROM site WHERE site_name=?',//根据name查找
     queryAll:'SELECT * FROM site'
 }
+//监测站点信息表
+sql.info={
+    //TODO:批量插入
+    //info_id INT(12) NOT NULL PRIMARY KEY,
+    // sid INT(10) NOT NULL,
+    // temperature NUMERIC(8,2),
+    // ph NUMERIC(8,2),
+    // dissolved_oxyge NUMERIC(8,2),
+    // permanganate_index NUMERIC(8,2),
+    // fluoride NUMERIC(8,2),
+    // ammontia NUMERIC(8,2),
+    // pertoleum NUMERIC(8,2),
+    // bod5 NUMERIC(8,2),
+    // electrical_conductivity NUMERIC(8,2),
+    // turbidity NUMERIC(8,2),
+    // chlorophyll_a NUMERIC(8,2),
+    // blur_green_algae NUMERIC(8,2),
+    // wtime TIME,
+    // wdate DATE,
+    // FOREIGN KEY(sid) REFERENCES site(site_id)
+    insert:'INSERT ',
+}
 module.exports = sql;
