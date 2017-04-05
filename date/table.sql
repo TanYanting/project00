@@ -59,13 +59,15 @@ CREATE TABLE standard(
 
 #--监测站点表 site
 CREATE TABLE site(
-       site_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+       site_id INT(5) NOT NULL PRIMARY KEY,
        site_name VARCHAR(50),
        stype INT(2) NOT NULL DEFAULT 3,
-       state INT(1) NOT NULL DEFAULT 1,
-       uid INT(8) NOT NULL,
-       wid INT(3) NOT NULL,
-       aid INT(3) NOT NULL,
+       state INT(1) NOT NULL DEFAULT 0,
+       uid INT(8),
+       wid INT(3),
+       aid INT(3),
+       remark VARCHAR(200),
+       stime BIGINT,
        FOREIGN KEY(stype) REFERENCES standard(standard_id),
        FOREIGN KEY(uid) REFERENCES wuser(user_id),
        FOREIGN KEY(wid) REFERENCES water(water_id),
@@ -74,7 +76,7 @@ CREATE TABLE site(
 
 #---监测站点信息表 info
 CREATE TABLE info(
-       info_id INT(12) NOT NULL PRIMARY KEY,
+       info_id INT(12) NOT NULL AUTO_INCREMENT PRIMARY KEY,
        sid INT(10) NOT NULL,
        temperature NUMERIC(8,2),
        ph NUMERIC(8,2),
@@ -88,9 +90,17 @@ CREATE TABLE info(
        turbidity NUMERIC(8,2),
        chlorophyll_a NUMERIC(8,2),
        blur_green_algae NUMERIC(8,2),
-       wtime TIME,
-       wdate DATE,
+	   wtime BIGINT,
        FOREIGN KEY(sid) REFERENCES site(site_id)
+);
+#---监测站点历史状态表
+CREATE TABLE sitehistory(
+    shistory_id INT(2) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    sid int(10) NOT NULL,
+    stime BIGINT NOT NULL,
+    state int(2) NOT NULL DEFAULT 0,
+    remark VARCHAR(200),
+    FOREIGN KEY(sid) REFERENCES site(site_id)
 );
 
 
@@ -173,23 +183,31 @@ INSERT warea(area_id,pid,area_name) value(180,31,'渝中'),(181,31,'大渡口'),
 	(195,31,'江津'),(196,31,'合川'),(197,31,'黔江'),(198,31,'长寿'),(199,31,'南区'),(200,31,'铜梁'),(201,31,'潼南'),(202,31,'荣昌'),(203,31,'开州'),
 	(204,31,'梁平'),(205,31,'武隆'),(206,31,'城口'),(207,31,'丰都'),(208,31,'垫江'),(209,31,'忠县'),(210,31,'云阳'),(211,31,'奉节'),(212,31,'巫山'),
 	(213,31,'巫溪'),(214,31,'石柱'),(215,31,'秀山'),(216,31,'酉阳'),(217,31,'彭水');
-
+#黑龙江
+INSERT warea(pid,area_name) value(13,'哈尔滨'),(13,'齐齐哈尔'),(13,'鸡西'),(13,'鹤岗'),(13,'双鸭山'),(13,'大庆'),(13,'伊春'),(13,'佳木斯'),(13,'七台河'),
+    (13,'牡丹江'),(13,'黑河'),(13,'绥化'),(13,'大兴安岭地区');
+#辽宁省
+INSERT warea(pid,area_name) value(14,'沈阳'),(14,'大连'),(14,'鞍山'),(14,'抚顺'),(14,'本溪'),(14,'丹东'),(14,'锦州'),(14,'营口'),(14,'阜新'),
+    (14,'辽阳'),(14,'盘锦'),(14,'铁岭'),(14,'朝阳'),(14,'葫芦岛');
+#吉林省
+INSERT warea(pid,area_name) value(15,'长春'),(15,'吉林'),(15,'四平'),(15,'辽源'),(15,'通化'),(15,'白山'),(15,'松原'),(15,'白城'),(15,'延边');
+#内蒙古自治区
+INSERT warea(pid,area_name) value(21,'呼和浩特'),(21,'包头'),(21,'乌海'),(21,'赤峰'),(21,'通辽'),(21,'鄂尔多斯'),(21,'呼伦贝尔'),
+    (21,'巴彦淖尔'),(21,'乌兰察布'),(21,'锡林郭勒盟'),(21,'兴安盟'),(21,'阿拉善盟');
+#陕西省
+INSERT warea(pid,area_name) value(28,'西安'),(28,'榆林'),(28,'延安'),(28,'宝鸡'),(28,'咸阳'),(28,'渭南'),(28,'铜川'),(28,'汉中'),(28,'安康'),(28,'商洛');
+#北京市
+INSERT warea(pid,area_name) value(1,'东城'),(1,'西城'),(1,'朝阳'),(1,'丰台'),(1,'石景山'),(1,'海淀'),(1,'门头沟'),(1,'房山'),(1,'通州'),(1,'顺义'),
+    (1,'昌平'),(1,'大兴'),(1,'怀柔'),(1,'平谷'),(1,'密云'),(1,'延庆');
+#天津市
+INSERT warea(pid,area_name) value(2,'和平'),(2,'河东'),(2,'河西'),(2,'南开'),(2,'河北'),(2,'滨海新区'),(2,'东丽'),(2,'西青'),(2,'津南'),(2,'北辰'),
+    (2,'武清'),(2,'宝坻'),(2,'宁河'),(2,'静海'),(2,'蓟州');
+#甘肃省
+INSERT
 #---用户信息表
 INSERT wuser(user_id,user_name,user_pwd,user_access) value(00000000,'admin','123456',9),(01,'test1','123456',1),
 	(02,'test2','123456',2),(03,'test3','123456',3);
 
-#---检测站点表数据
-#太湖流域
-INSERT site(site_id,site_name,stype,uid,wid,aid) value(00001,'浙江湖州新塘港',1,01,001,004),(00002,'江苏苏州西山',3,01,001,150),
-	(00003,'江苏无锡沙诸',3,01,001,149),(00004,'上海青浦急水湾',3,01,001,143),(00005,'江苏宜兴兰山嘴',3,01,001,149);
-#长江流域
-INSERT site(site_id,site_name,uid,wid,aid) value(00006,'四川攀枝花龙洞',02,010,161),(00007,'四川乐山岷江大桥',02,010,167),
-	(00008,'四川宜宾凉姜沟',02,010,170),(00009,'四川泸州沱江二桥',02,010,179),(00010,'重庆永川朱坨',02,010,191),(00011,'四川广元清风峡',02,010,164),
-	(00012,'湖北宜昌南津湾',02,010,085),(00013,'湖北丹江口胡家岭',02,010,084),(00014,'河南南阳陶岔',02,010,126),(00015,'湖南岳阳岳阳楼',02,010,048),
-	(00016,'湖南长沙新港',02,010,047),(00017,'湖南岳阳城陵矶',02,010,048),(00018,'湖北武汉宗关',02,010,082),(00019,'江西九江蛤蟆石',02,010,043),
-	(00020,'江西南昌滁槎',02,010,037),(00021,'江西九江河西水厂',02,010,043),(00022,'安徽安庆皖河口',02,010,017),(00023,'江苏南京林山',02,010,146),
-	(00024,'江苏扬州三江营',02,010,153);
-#滇池流域
-INSERT site(site_id,site_name,uid,wid,aid) value(00025,'云南昆明西苑隧道',03,013,098),(00026,'云南昆明观音山',03,013,098);
-#西南诸河
-INSERT site(site_id,site_name,uid,wid,aid) value(00027,'云南西双版纳橄榄坝',03,014,108),(0028,'云南红河州河口',03,014,104);
+
+
+set global wait_timeout = 10;

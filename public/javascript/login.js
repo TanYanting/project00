@@ -2,7 +2,6 @@
  * Created by Ablion on 2017/3/27.
  */
 var user={}
-var isSuccess=true;
 var login={
     init:function () {
         $("#btn_login").on('click',this.vaildUser);

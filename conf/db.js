@@ -9,6 +9,6 @@ var pool=mysql.createPool({
     password:'',
     database:'wqm',
     port:'3306',
-    connectionLimit:100 //最大连接数
+    connectionLimit:1000 //最大连接数
 });
 module.exports=pool;

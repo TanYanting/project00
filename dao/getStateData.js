@@ -11,6 +11,8 @@ var superagent=require('superagent');
 var getdata=experss();
 //数据库
 var query=require('./pool');
+//sql语句
+var sql=require('./sql');
 
 function pushArr(str) {
     let arr=str.split('!!');
@@ -29,31 +31,20 @@ getdata.get('/',function (req,res,next) {
         var $=cheerio.load(sres.text);//解析
         var dataStr={};
         //获取字符串数据
-        dataStr.infoStr=$('[name=stainfo]').val();
-        dataStr.siteNameStr=$('[name=staname]').val();
+        // dataStr.infoStr=$('[name=stainfo]').val();
+        // dataStr.siteNameStr=$('[name=staname]').val();
         dataStr.stateStr=$('[name=stastatus]').val();
         dataStr.stateInfoStr=$('[name=stationinfo]').val();
         //存入数据库
-        //监测站点信息表
-        let info=pushArr(dataStr.infoStr);
-        //(info_id,s_id,ph,dissolved_oxyge,ammontia,permanganate_index,wtime,wdate)
-        let infoSql='INSERT INTO info(s_id,ph,dissolved_oxyge,ammontia,permanganate_index,wtime,wdate) values';
-        for(let i=0;i<info.length;i++){
-            for(let j=0;j<info[i].length;j++){
-                debugger;
-                info[i][j]=(info[i][j]).replace(/\s+/g,'');
-                if(info[i][12]!='undefined'){
-                    let subarr=!info[i][12]?(info[1][12]).split('-'):'';
-                    info[i][12]=subarr[0]+':'+subarr[1]+':'+subarr[2];
-                }
-            }
-            infoSql+=`(${info[i][0]},${info[i][2]},${info[i][4]},${info[i][10]},${info[i][6]},${info[i][1]},${info[i][12]})`;
+        //存入状态数据，同时，将原状态添加到历史状态表中
+        let code=[];
+        var state=pushArr(dataStr.stateStr);
+        for(let i=0;i<state.length;i++){
+            query(sql.site.updateState,[state[i][1],state[i][0]],function (rest) {
+                console.log(rest.data);
+                code.push(rest.code);
+            });
         }
-        query(infoSql,'',function (rest) {
-            console.log(rest.code);
-        })
-
-        res.send(infoSql);
     });
 });
 
