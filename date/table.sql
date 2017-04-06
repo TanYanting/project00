@@ -223,6 +223,10 @@ INSERT warea(pid,area_name) value(19,'济南'),(19,'青岛'),(19,'淄博'),(19,'
 #山西省
 INSERT warea(pid,area_name) value(27,'太原'),(27,'大同'),(27,'朔州'),(27,'阳泉'),(27,'长治'),(27,'晋城'),(27,'忻州'),(27,'吕梁'),(27,'晋中'),
     (27,'临汾'),(27,'运城');
+#修改
+INSERT warea(pid,area_name) value(25,'五指山'),(25,'文昌'),(25,'万宁'),(25,'东方'),(25,'琼海');
+UPDATE warea SET area_name='儋州' where area_name='瞻洲';
+
 #---用户信息表
 INSERT wuser(user_id,user_name,user_pwd,user_access) value(00000000,'admin','123456',9),(01,'test1','123456',1),
 	(02,'test2','123456',2),(03,'test3','123456',3);

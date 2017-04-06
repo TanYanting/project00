@@ -19,6 +19,8 @@
     <![endif]-->
     <!--mycss-->
     <link rel="stylesheet" type="text/css" href="../stylesheets/pages.css"/>
+    <!--vue.js-->
+    <script src="../vue/vue.js"></script>
 </head>
 <body>
     <div class="container">
@@ -28,9 +30,10 @@
         </div>
         <!--数据表格-->
         <div class="table-responsive">
-            <table class="table table-hover table-striped">
+            <!--待定 table-bordered-->
+            <table class="table table-hover">
                 <thead>
-                    <tr>
+                    <tr class="info">
                         <td>序号</td>
                         <td>站点</td>
                         <td>水质类型</td>
@@ -41,7 +44,21 @@
                         <td>操作</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="sitemanage">
+                    <tr v-for="site in sitedata">
+                        <td>{{site.num}}</td>
+                        <td>{{site.name}}</td>
+                        <td>{{site.waterstate}}</td>
+                        <td>{{site.status}}</td>
+                        <td>{{site.user}}</td>
+                        <td>{{site.water}}</td>
+                        <td>{{site.area}}</td>
+                        <td>
+                            <a href="#" v-if="user.access>1">[编辑]</a>
+                            <a href="#" v-if="user.access>2">[删除]</a>
+                            <a href="#" v-if="site.user==user.num">[录入]</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -50,7 +67,7 @@
     <script src="../jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
-    <!---->
-    <script src="javascript/"></script>
+    <!--this page's js-->
+    <script src="../javascript/site_manage.js"></script>
 </body>
 </html>
