@@ -38,6 +38,7 @@ var login={
                     $('.login').removeClass('hide');
                     $('.no-login').addClass('hide');
                 //    TODO：存储当前用户信息，会话级
+
                 }else{
                     //TODO:提示密码或用户名错误，增加提示信息
                 }

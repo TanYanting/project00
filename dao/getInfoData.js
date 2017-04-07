@@ -42,7 +42,7 @@ getdata.get('/',function (req,res,next) {
                 debugger;
                 if(info[i][j]!='undefined'){
                     info[i][j]=(info[i][j]).replace(/\s+/g,'');
-                    info[i][j]=(info[i][j]=='-')?NULL:info[i][j];
+                    info[i][j]=(info[i][j]=='-')?9999:info[i][j];
                 }
             }
             let n=info[i].length;

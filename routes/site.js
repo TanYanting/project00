@@ -12,17 +12,19 @@ var sql=require('../dao/sql');
 var query=require('../dao/pool');
 
 router.get('/',function (req,res) {
-    query(sql.site.queryAll,'',function(rows){
-        res.send(rows);
+    query(sql.batch.querySite,'',function(rows){
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
     });
 });
-router.get('/query',function (req,res) {
-    var user_id=req.body.user_id;
-    var user_flag=req.body.login_flag==1?0:1;
-    //updateFlag:'UPDATE wuser set login_flag=? WHERE user_id=?'
-    query(sql.wuser.updateFlag,[user_flag,user_id],function(rows){
-        res.send(rows.msg);
-    });
-});
+// router.get('/query',function (req,res) {
+//     var user_id=req.body.user_id;
+//     var user_flag=req.body.login_flag==1?0:1;
+//     //updateFlag:'UPDATE wuser set login_flag=? WHERE user_id=?'
+//     query(sql.wuser.updateFlag,[user_flag,user_id],function(rows){
+//         res.send(rows.msg);
+//     });
+// });
 
 module.exports = router;

@@ -40,19 +40,20 @@
                         <td>状态</td>
                         <td>负责人</td>
                         <td>水域</td>
-                        <td>地域</td>
+                        <td  colspan="2" class="text-center">地域</td>
                         <td>操作</td>
                     </tr>
                 </thead>
                 <tbody id="sitemanage">
                     <tr v-for="site in sitedata">
-                        <td>{{site.num}}</td>
-                        <td>{{site.name}}</td>
-                        <td>{{site.waterstate}}</td>
-                        <td>{{site.status}}</td>
-                        <td>{{site.user}}</td>
-                        <td>{{site.water}}</td>
-                        <td>{{site.area}}</td>
+                        <td>{{site.site_id}}</td>
+                        <td>{{site.site_name}}</td>
+                        <td>{{site.stype}}</td>
+                        <td>{{site.state}}</td>
+                        <td>{{site.user_name}}</td>
+                        <td>{{site.water_name}}</td>
+                        <td>{{site.province_name}}</td>
+                        <td>{{site.area_name}}</td>
                         <td>
                             <a href="#" v-if="user.access>1">[编辑]</a>
                             <a href="#" v-if="user.access>2">[删除]</a>

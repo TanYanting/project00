@@ -231,6 +231,10 @@ UPDATE warea SET area_name='儋州' where area_name='瞻洲';
 INSERT wuser(user_id,user_name,user_pwd,user_access) value(00000000,'admin','123456',9),(01,'test1','123456',1),
 	(02,'test2','123456',2),(03,'test3','123456',3);
 
-
+#创建站点管理的视图
+CREATE VIEW sitemanage AS
+	SELECT site_id,site_name,stype,state,user_name,water_name,province_name,area_name
+	FROM site,wuser,water,warea,province
+	WHERE site.uid=wuser.user_id and site.wid=water.water_id and site.aid=warea.area_id and warea.pid=province.province_id;
 
 set global wait_timeout = 10;

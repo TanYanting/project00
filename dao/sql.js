@@ -36,5 +36,9 @@ sql.info={
 sql.sitehistory={
     insert:'INSERT sitehistory(sid,stime,state,remark) value(?,?,?,?)'
 }
+//联合查询，批量
+sql.batch={
+    querySite:'SELECT * FROM sitemanage'
+}
 
 module.exports = sql;
