@@ -4,9 +4,9 @@
  */
 var mysql=require('mysql');
 var pool=mysql.createPool({
-    host:'127.0.0.1',
+    host:'192.168.1.106',
     user:'root',
-    password:'',
+    password:'2wsx',
     database:'wqm',
     port:'3306',
     connectionLimit:1000 //最大连接数

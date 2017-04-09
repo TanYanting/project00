@@ -18,13 +18,15 @@ router.get('/',function (req,res) {
         }
     });
 });
-// router.get('/query',function (req,res) {
-//     var user_id=req.body.user_id;
-//     var user_flag=req.body.login_flag==1?0:1;
-//     //updateFlag:'UPDATE wuser set login_flag=? WHERE user_id=?'
-//     query(sql.wuser.updateFlag,[user_flag,user_id],function(rows){
-//         res.send(rows.msg);
-//     });
-// });
+router.get('/updatesite',function (req,res) {
+    res.send('i got it!')
+    // var site=req.body;
+    // var site_id=req.body.site_id;
+    // res.send(site);
+    // //updateFlag:'UPDATE wuser set login_flag=? WHERE user_id=?'
+    // query(sql.wuser.updateFlag,[user_flag,user_id],function(rows){
+    //     res.send(rows.msg);
+    // });
+});
 
 module.exports = router;

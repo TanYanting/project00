@@ -8,6 +8,10 @@
 	float: right;
 	margin-left: 80px;
 }
+/*iframe 溢出滚动*/
+#inPage{
+	overflow-y:auto;
+}
 
 /*网页上的显示*/
 .sm-right{
@@ -26,4 +30,10 @@
 	.sm-right{
 		display: none;
 	}
+}
+
+/*站点管理 搜索行*/
+.search-box{
+	margin-bottom: 20px;
+	text-align: center;
 }
