@@ -16,7 +16,11 @@ var login={
                     //如果用户权限大于等于9，显示用户管理
                     if(thisuser[3]>=9){
                         $('.admin').removeClass('hide');
+                        $('.isInput').removeClass('hide');
                     }else{
+                        if(thisuser[3]>=2){
+                            $('.isInput').removeClass('hide');
+                        }
                         $('.admin').hasClass('hide')?1:$('.admin').addClass('hide');
                     }
                     $('.login').removeClass('hide');
@@ -55,6 +59,9 @@ var login={
             if(user.flag==0){
                 $('.no-login').removeClass('hide');
                 $('.login').addClass('hide');
+                sessionStorage.setItem('userinfo','');
+                $('.isInput').hasClass('hide')?1:$('.isInput').addClass('hide');
+                $('.admin').hasClass('hide')?1:$('.admin').addClass('hide');
             }
         });
     },
@@ -91,7 +98,11 @@ var login={
         //如果用户权限大于等于9，显示用户管理
         if(user.access>=9){
             $('.admin').removeClass('hide');
+            $('.isInput').removeClass('hide');
         }else{
+            if(user.access>=2){
+                $('.isInput').removeClass('hide');
+            }
             $('.admin').hasClass('hide')?1:$('.admin').addClass('hide');
         }
         $('.login').removeClass('hide');

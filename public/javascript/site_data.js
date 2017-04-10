@@ -1,40 +1,95 @@
 /**
- * Created by Ablion on 2017/4/6.
+ * Created by Ablio on 2017/4/11.
  */
 //获取用户信息
 let user=window.sessionStorage.getItem('userinfo')?window.sessionStorage.getItem('userinfo').split('-'):['-1','','-1'];
 //vue
 var siteVm=new Vue({
-    el:'#sitemanage',
+    el:'#sitedata',
     data: {
-        sitedata: null,
+        datainfo: null,
         user: {
             'num': parseInt(user[0]),
             'name': user[1],
             'access': parseInt(user[3])
         },
-        eidt:function (event) {
+        open:function (sid,event) {
             event.prevent;
-            $('.dialogbox').removeClass('hide');
             let target=$(event.target);
-            $('#save').data('site',target.parent().siblings().eq(0).html());
-            $('#sitename').val(target.parent().siblings().eq(1).html());
-            $('#stype').val(target.parent().siblings().eq(2).html());
-            $('#state').val(target.parent().siblings().eq(3).html());
-            $('#username').val(target.parent().siblings().eq(4).html());
-        },
-        del:function(event){
-            event.prevent;
-            $('.alertbox').removeClass('hide');
-            let target=$(event.target);
-            //给这行做标记
-            target.parent().parent().addClass('delete-tr');
-            let sitename=target.parent().siblings().eq(1).html();
-            $('.sname').html(sitename);
-            $('#delete').data('site',target.siblings().eq(0).html());
+            let char=target.parents('tr').next();
+            char.siblings('.chart').addClass('hide');
+            char.hasClass('hide')?(char.removeClass('hide')):(char.addClass('hide'));
+            let div='<div id="chart'+sid+'"></div>';
+            char.children().html(div);
+            getdata.showChar(sid);
         }
     }
 });
+
+//数据格式
+option = {
+    title: {
+        text: '折线图堆叠'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['周一','周二','周三','周四','周五','周六','周日']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'邮件营销',
+            type:'line',
+            stack: '总量',
+            data:[120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name:'联盟广告',
+            type:'line',
+            stack: '总量',
+            data:[220, 182, 191, 234, 290, 330, 310]
+        },
+        {
+            name:'视频广告',
+            type:'line',
+            stack: '总量',
+            data:[150, 232, 201, 154, 190, 330, 410]
+        },
+        {
+            name:'直接访问',
+            type:'line',
+            stack: '总量',
+            data:[320, 332, 301, 334, 390, 330, 320]
+        },
+        {
+            name:'搜索引擎',
+            type:'line',
+            stack: '总量',
+            data:[820, 932, 901, 934, 1290, 1330, 1320]
+        }
+    ]
+};
+
 //页面加载完成异步加载站点信息
 var getdata={
     pager:{
@@ -47,57 +102,24 @@ var getdata={
     init:function () {
         this.getsitelist();
         /*if(this.pager.pageNum==1){
-            $('.previous').attr('disable',true);
-        }*/
+         $('.previous').attr('disable',true);
+         }*/
         $('.previous').on('click',this.previous);
         $('.next').on('click',this.next);
-        $('#save').on('click',this.save);
-        $('#delete').on('click',this.delete);
-        $('.closeedit').on('click',function () {
-            $('.dialogbox').addClass('hide');
-            $('#sitename').val('');
-            $('#stype').val('');
-            $('#state').val('');
-            $('#username').val('');
-        });
-        $('.closedel').on('click',function () {
-            $('.alertbox').addClass('hide');
-            $('.delete-tr').removeClass('delete-tr');
-        });
     },
-    delete:function () {
-        debugger;
-      $('.alertbox').addClass('hide');
-      let site_id=parseInt($('#delete').data('site'));
-      $.ajax({
-          type:'post',
-          data:{site_id:site_id},
-          url:'/site/delete',
-          success:function (msg) {
-              if(msg=='success'){
-                  $('.delete-tr').remove();
-              }
-          }
-      });
-    },
-    save:function () {
-        $('.dialogbox').addClass('hide');
-        let site={};
-        site.site_id=$('#save').data('site');
-    //    TODO:表单验证
-        var data=$('.eidtform').serializeArray();
-        site.site_name=data[0].value;
-        site.stype=data[1].value;
-        site.state=data[2].value;
-        site.user_name=data[3].value;
+    showChar:function (sid) {
+    //    计算当前日期前七天的毫秒数
+        var weeks=604800000;
+        var thistime=new Date();
+        var mintime=thistime.getTime()-weeks;
         $.ajax({
             type:'post',
-            data:site,
-            url:'/site/updatesite',
-            success:function (msg) {
-                alert(msg);
+            data:{sid:sid,max:thistime,min:mintime},
+            url:'/site/getinfo',
+            success:function (res) {
+                console.dir(res);
             }
-        })
+        });
     },
     previous:function () {
         if(getdata.pager.pageNum<=1){
@@ -148,7 +170,8 @@ var getdata={
         let start=(pageNum-1)*this.pager.pageSize;
         let end=pageNum*this.pager.pageSize;
         let subdata=this.pager.data.slice(start,end);
-        siteVm.sitedata=subdata;
+        siteVm.datainfo=subdata;
     }
 }
 getdata.init();
+

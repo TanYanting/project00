@@ -23,6 +23,7 @@
     <script src="../vue/vue.js"></script>
 </head>
 <body>
+    <!--编辑框-->
     <div class="dialogbox hide" style="padding:15px;border-radius:5px;box-shadow:0 0 50px #333;z-index: 1001;background:#FFF;position: fixed;top:0;left:0;right:0;bottom:0;margin:auto;width:600px;height:320px">
         <h3 class="text-center" style="margin-top:10px">编 辑</h3>
         <form class="form-horizontal eidtform">
@@ -52,13 +53,26 @@
             </div>
             <div class="form-group">
                 <div class="text-center">
-                    <button type="button" v-on:click="close()" class="btn btn-default">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-default closeedit">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
                     <button type="button" data-site="" class="btn btn-info" id="save">&nbsp;&nbsp;保 存&nbsp;&nbsp;</button>
                 </div>
             </div>
         </form>
-
     </div>
+
+    <!--删除站点-->
+    <div class="alertbox hide" style="padding:15px;border-radius:5px;box-shadow:0 0 50px #333;z-index: 1001;background:#FFF;position: fixed;top:0;left:0;right:0;bottom:0;margin:auto;width:400px;height:230px">
+        <h3 class="text-center" style="margin-top:10px">编 辑</h3>
+        <p class="info" style="text-align: center;height:100px;line-height:100px;">
+            确定删除站点 “<span class="sname"></span>”
+        </p>
+        <div class="text-center">
+            <button type="button" class="btn btn-default closedel">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
+            <button type="button" data-site="" class="btn btn-info" id="delete">&nbsp;&nbsp;确 认&nbsp;&nbsp;</button>
+        </div>
+    </div>
+
+    <!-------------------正文-------------->
     <div class="container">
         <!--查找-->
         <div class="search-box">
@@ -107,9 +121,9 @@
                         <td>{{site.province_name}}</td>
                         <td>{{site.area_name}}</td>
                         <td>
-                            <a href="#" v-on:click="eidt($event)" v-if="user.access>1">[编辑]</a>
-                            <a href="#" v-if="user.access>2">[删除]</a>
-                            <a href="#" v-if="site.user_name==user.name||user.access==9">[录入]</a>
+                            <a v-on:click="eidt($event)" v-if="user.access>1">[编辑]</a>
+                            <a v-on:click="del($event)" v-if="user.access>2">[删除]</a>
+                            <a v-if="site.user_name==user.name||user.access==9">[录入]</a>
                         </td>
                     </tr>
                     <tr>

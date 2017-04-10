@@ -23,13 +23,16 @@ sql.site={
     updateRemark:'UPDATE site set remark=? WHERE site_id=?',//修改状态
     updateStime:'UPDATE site set stime=? WHERE site_id=?',//修改状态
     updateUser:'UPDATE site set uid=? WHERE site_id=?',//修改负责人
-    delete:'DELETE FROM site WHERE site_id=?',//删除
+    updateSite:'UPDATE site set site_name=?,stype=?,state=?,uid=? WHERE site_id=?',
+    delete:'UPDATE site SET del=1 WHERE site_id=?',//非物理删除
     queryById:'SELECT * FROM site WHERE site_id=?',//根据ID查找
     queryByName:'SELECT * FROM site WHERE site_name=?',//根据name查找
-    queryAll:'SELECT * FROM site'
+    queryAll:'SELECT * FROM site WHERE del!=1'
 }
 //监测站点信息表
 sql.info={
+    deleteSite:'UPDATE info SET del=1 WHERE sid=?',//b标记删除（不可物理删除）
+    queryWeekBySid:'SELECT * FROM info WHERE sid=? and wtime>=? and wtime<=? and del!=1'// 查找一周的数据（站点数据）
     //TODO:批量插入
 }
 //监测站点历史状态表
