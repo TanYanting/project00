@@ -32,7 +32,10 @@ sql.site={
 //监测站点信息表
 sql.info={
     deleteSite:'UPDATE info SET del=1 WHERE sid=?',//b标记删除（不可物理删除）
-    queryWeekBySid:'SELECT * FROM info WHERE sid=? and wtime>=? and wtime<=? and del!=1'// 查找一周的数据（站点数据）
+    queryWeekBySid:'SELECT DISTINCT wtime FROM info WHERE sid=? AND (wtime BETWEEN ? AND ?) and del!=1 ORDER BY wtime;',// 查找一周的数据（站点数据）
+    queryInfoByTime:'SELECT ph,dissolved_oxyge as d_o,permanganate_index as p_i,ammontia as a_a,wtime ' +
+        'FROM info WHERE sid=? AND wtime IN ' +
+        '(SELECT DISTINCT wtime FROM info WHERE sid=? AND (wtime BETWEEN ? AND ?) and del!=1 ORDER BY wtime)'
     //TODO:批量插入
 }
 //监测站点历史状态表

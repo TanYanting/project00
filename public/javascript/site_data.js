@@ -29,13 +29,13 @@ var siteVm=new Vue({
 //数据格式
 option = {
     title: {
-        text: '折线图堆叠'
+        text: '一周基础数据'
     },
     tooltip: {
         trigger: 'axis'
     },
     legend: {
-        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+        data:['PH','溶氧量','高锰酸钾指数','氨氮']
     },
     grid: {
         left: '3%',
@@ -51,41 +51,35 @@ option = {
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['周一','周二','周三','周四','周五','周六','周日']
+        data: []
     },
     yAxis: {
         type: 'value'
     },
     series: [
         {
-            name:'邮件营销',
+            name:'PH',
             type:'line',
             stack: '总量',
-            data:[120, 132, 101, 134, 90, 230, 210]
+            data:[]
         },
         {
-            name:'联盟广告',
+            name:'溶氧量',
             type:'line',
             stack: '总量',
-            data:[220, 182, 191, 234, 290, 330, 310]
+            data:[]
         },
         {
-            name:'视频广告',
+            name:'高锰酸钾指数',
             type:'line',
             stack: '总量',
-            data:[150, 232, 201, 154, 190, 330, 410]
+            data:[]
         },
         {
-            name:'直接访问',
+            name:'氨氮',
             type:'line',
             stack: '总量',
-            data:[320, 332, 301, 334, 390, 330, 320]
-        },
-        {
-            name:'搜索引擎',
-            type:'line',
-            stack: '总量',
-            data:[820, 932, 901, 934, 1290, 1330, 1320]
+            data:[]
         }
     ]
 };
@@ -112,12 +106,29 @@ var getdata={
         var weeks=604800000;
         var thistime=new Date();
         var mintime=thistime.getTime()-weeks;
+        thistime=thistime.getTime();
+        var div='chart'+sid;
+        var myChart = echarts.init(document.getElementById(div));
         $.ajax({
             type:'post',
             data:{sid:sid,max:thistime,min:mintime},
             url:'/site/getinfo',
             success:function (res) {
-                console.dir(res);
+                //清空上一次数据
+                for(let i=0;i<4;i++){
+                    option.series[i].data=[];
+                }
+                option.xAxis.data=[];
+                for(let i=0;i<res.length;i++){
+                    res[i].ph==9999?option.series[0].data.push(''):option.series[0].data.push(res[i].ph);
+                    res[i].d_o==9999?option.series[1].data.push(''):option.series[1].data.push(res[i].d_o);
+                    res[i].p_i==9999?option.series[2].data.push(''):option.series[2].data.push(res[i].p_i);
+                    res[i].a_a==9999?option.series[3].data.push(''):option.series[3].data.push(res[i].a_a);
+                    let time=new Date(res[i].wtime);
+                    time=(time.getMonth()+1)+'/'+time.getDate()+' '+time.getHours()+'时';
+                    option.xAxis.data.push(time);
+                }
+                myChart.setOption(option);
             }
         });
     },

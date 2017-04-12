@@ -53,7 +53,7 @@ router.post('/getinfo',function (req,res) {
     let sid=req.body.sid;
     let max=req.body.max;
     let min=req.body.min;
-    query(sql.info.queryWeekBySid,[sid,min,max],function (rows) {
+    query(sql.info.queryInfoByTime,[sid,sid,min,max],function (rows) {
         if(rows.code==200){
             res.send(rows.data);
         }
