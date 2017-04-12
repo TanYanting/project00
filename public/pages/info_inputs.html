@@ -23,48 +23,11 @@
     <script src="../vue/vue.js"></script>
 </head>
 <body>
-<!--编辑框-->
-<div class="dialogbox hide" style="padding:15px;border-radius:5px;box-shadow:0 0 50px #333;z-index: 1001;background:#FFF;position: fixed;top:0;left:0;right:0;bottom:0;margin:auto;width:600px;height:320px">
-    <h3 class="text-center" style="margin-top:10px">编 辑</h3>
-    <form class="form-horizontal eidtform">
-        <div class="form-group">
-            <label for="sitename" class="col-sm-2 control-label">站点名称</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="site_name" id="sitename">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="stype" class="col-sm-2 control-label">状态</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="stype" id="stype">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="state" class="col-sm-2 control-label">水质类型</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="state" id="state">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="username" class="col-sm-2 control-label">负责人</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="user_name" id="username">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="text-center">
-                <button type="button" class="btn btn-default closeedit">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
-                <button type="button" data-site="" class="btn btn-info" id="save">&nbsp;&nbsp;保 存&nbsp;&nbsp;</button>
-            </div>
-        </div>
-    </form>
-</div>
-
 <!--删除站点-->
 <div class="alertbox hide" style="padding:15px;border-radius:5px;box-shadow:0 0 50px #333;z-index: 1001;background:#FFF;position: fixed;top:0;left:0;right:0;bottom:0;margin:auto;width:400px;height:230px">
-    <h3 class="text-center" style="margin-top:10px">编 辑</h3>
+    <h3 class="text-center" style="margin-top:10px">确 认</h3>
     <p class="info" style="text-align: center;height:100px;line-height:100px;">
-        确定删除站点 “<span class="sname"></span>”
+        确定保存 “<span class="sname"></span>”
     </p>
     <div class="text-center">
         <button type="button" class="btn btn-default closedel">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
