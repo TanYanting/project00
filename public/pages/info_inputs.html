@@ -84,11 +84,55 @@
                     <td>{{site.province_name}}</td>
                     <td>{{site.area_name}}</td>
                     <td>
-                        <a v-if="site.user_name==user.name||user.access==9">[录入]</a>
+                        <a v-on:click="open(site.site_id,$event)" >[录入]</a>
                     </td>
                 </tr>
-                <tr>
+                <tr class="input-box">
                     <!--data 该站点录入的信息，信息展开的列表-->
+                    <td colspan="9">
+                        <ul id="input-ls"+{{site.site_id}}>
+                            <!--电导率-->
+                            <li>
+                                <span>{{electrical}}</span>
+                                <input type="text" v-model="electrical">
+                            </li>
+                            <!--浊度-->
+                            <li>
+                                <span>{{turbidity}}</span>
+                                <input type="text" v-model="turbidity">
+                            </li>
+                            <!--叶绿素a-->
+                            <li>
+                                <span>{{chlorophyll_a}}</span>
+                                <input type="text" v-model="chloropyll_a">
+                            </li>
+                            <!--蓝绿澡-->
+                            <li>
+                                <span>{{blue_green_algae}}</span>
+                                <input type="text" v-model="blue_green_algae">
+                            </li>
+                            <!--氟化物-->
+                            <li>
+                                <span>{{fluoride}}</span>
+                                <input type="text" v-model="fluoride">
+                            </li>
+                            <!--石油类-->
+                            <li>
+                                <span>{{pertoleum}}</span>
+                                <input type="text" v-model="pertoleum">
+                            </li>
+                            <!--五日生化需氧量BOD5-->
+                            <li>
+                                <span>{{bod5}}</span>
+                                <input type="text" v-model="bod5">
+                            </li>
+                        </ul>
+                        <!--保存录入/取消-->
+                        <div class="text-center">
+                            <input type="button" value="保存" class="btn btn-info">
+                            <input type="button" value="取消" class="btn btn-default">
+                        </div>
+                    </td>
                 </tr>
             </template>
             <tr>
@@ -114,6 +158,6 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
 <!--this page's js-->
-<script src="../javascript/site_manage.js"></script>
+<script src="../javascript/info_inputs.js"></script>
 </body>
 </html>
