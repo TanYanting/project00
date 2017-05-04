@@ -7,31 +7,25 @@ let user=window.sessionStorage.getItem('userinfo')?window.sessionStorage.getItem
 var siteVm=new Vue({
     el:'#sitemanage',
     data: {
-        sitedata: null,
+        datainfo: null,
+        electrical:  null,
+        turbidity:null,
+        chlorophyll_a:null,
+        blue_green_algae:null,
+        fluoride:null,
+        pertoleum:null,
+        bod5:null,
         user: {
             'num': parseInt(user[0]),
             'name': user[1],
             'access': parseInt(user[3])
         },
-        eidt:function (event) {
+        open:function (sid,event) {
             event.prevent;
-            $('.dialogbox').removeClass('hide');
             let target=$(event.target);
-            $('#save').data('site',target.parent().siblings().eq(0).html());
-            $('#sitename').val(target.parent().siblings().eq(1).html());
-            $('#stype').val(target.parent().siblings().eq(2).html());
-            $('#state').val(target.parent().siblings().eq(3).html());
-            $('#username').val(target.parent().siblings().eq(4).html());
-        },
-        del:function(event){
-            event.prevent;
-            $('.alertbox').removeClass('hide');
-            let target=$(event.target);
-            //给这行做标记
-            target.parent().parent().addClass('delete-tr');
-            let sitename=target.parent().siblings().eq(1).html();
-            $('.sname').html(sitename);
-            $('#delete').data('site',target.siblings().eq(0).html());
+            let char=target.parents('tr').next();
+            char.siblings('.chart').addClass('hide');
+            char.hasClass('hide')?(char.removeClass('hide')):(char.addClass('hide'));
         }
     }
 });
@@ -114,7 +108,7 @@ var getdata={
         let start=(pageNum-1)*this.pager.pageSize;
         let end=pageNum*this.pager.pageSize;
         let subdata=this.pager.data.slice(start,end);
-        siteVm.sitedata=subdata;
+        siteVm.datainfo=subdata;
     }
 }
 getdata.init();

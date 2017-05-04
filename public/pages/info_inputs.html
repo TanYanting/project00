@@ -87,44 +87,51 @@
                         <a v-on:click="open(site.site_id,$event)" >[录入]</a>
                     </td>
                 </tr>
-                <tr class="input-box">
+                <tr class="input-box hide">
                     <!--data 该站点录入的信息，信息展开的列表-->
                     <td colspan="9">
-                        <ul id="input-ls"+{{site.site_id}}>
+                        <ul class="input-ls form-inline" :id="site.site_id">
                             <!--电导率-->
-                            <li>
+                            <li class="form-group">
+                                <label>电导率：</label>
                                 <span>{{electrical}}</span>
-                                <input type="text" v-model="electrical">
+                                <input type="text" v-model="electrical" class="form-control">
                             </li>
                             <!--浊度-->
-                            <li>
+                            <li class="form-group">
+                                <label>浊度：</label>
                                 <span>{{turbidity}}</span>
-                                <input type="text" v-model="turbidity">
+                                <input type="text" v-model="turbidity" class="form-control">
                             </li>
                             <!--叶绿素a-->
-                            <li>
+                            <li class="form-group">
+                                <label>叶绿素a：</label>
                                 <span>{{chlorophyll_a}}</span>
-                                <input type="text" v-model="chloropyll_a">
+                                <input type="text" v-model="chlorophyll_a" class="form-control">
                             </li>
                             <!--蓝绿澡-->
-                            <li>
+                            <li class="form-group">
+                                <label>蓝绿藻：</label>
                                 <span>{{blue_green_algae}}</span>
-                                <input type="text" v-model="blue_green_algae">
+                                <input type="text" v-model="blue_green_algae" class="form-control">
                             </li>
                             <!--氟化物-->
-                            <li>
+                            <li class="form-group">
+                                <label>氟化物：</label>
                                 <span>{{fluoride}}</span>
-                                <input type="text" v-model="fluoride">
+                                <input type="text" v-model="fluoride" class="form-control">
                             </li>
                             <!--石油类-->
-                            <li>
+                            <li class="form-group">
+                                <label>石油类：</label>
                                 <span>{{pertoleum}}</span>
-                                <input type="text" v-model="pertoleum">
+                                <input type="text" v-model="pertoleum" class="form-control">
                             </li>
                             <!--五日生化需氧量BOD5-->
-                            <li>
+                            <li class="form-group">
+                                <label>五日生化需氧量BOD5：</label>
                                 <span>{{bod5}}</span>
-                                <input type="text" v-model="bod5">
+                                <input type="text" v-model="bod5" class="form-control">
                             </li>
                         </ul>
                         <!--保存录入/取消-->
