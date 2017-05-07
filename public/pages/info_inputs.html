@@ -21,17 +21,112 @@
     <link rel="stylesheet" type="text/css" href="../stylesheets/pages.css"/>
     <!--vue.js-->
     <script src="../vue/vue.js"></script>
+    <style>
+        .inputbox{
+            padding:15px;
+            border-radius:5px;
+            box-shadow:0 0 50px #333;
+            z-index: 1001;
+            background:#FFF;
+            position: fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin:auto;
+            width:400px;
+            height:500px
+        }
+        .inputbox ul{
+            list-style: none;
+            overflow: hidden;
+            padding:0;
+        }
+        .inputbox ul li{
+            list-style: none;
+            float:left;
+            width:50%;
+            margin:0;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
-<!--删除站点-->
-<div class="alertbox hide" style="padding:15px;border-radius:5px;box-shadow:0 0 50px #333;z-index: 1001;background:#FFF;position: fixed;top:0;left:0;right:0;bottom:0;margin:auto;width:400px;height:230px">
-    <h3 class="text-center" style="margin-top:10px">确 认</h3>
-    <p class="info" style="text-align: center;height:100px;line-height:100px;">
-        确定保存 “<span class="sname"></span>”
-    </p>
+<!--录入信息-->
+<div class="inputbox hide" id="inputInfo">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a v-on:click="tabs(true,$event)">补充信息</a></li>
+        <li role="presentation"><a v-on:click="tabs(false,$event)">新增数据</a></li>
+    </ul>
+
+    <!--补充信息-->
+    <div class="add">
+        <!--根据数据库数据补充-->
+        <select name="timeSel" v-model="timeSel" @change="getInfo($event)" id="timeSel" class="form-control"></select>
+    </div>
+    <!--新增信息-->
+    <div class="new hide">
+        <input type="datetime-local" v-model="timePick" class="form-control dateTime" id="dateTime">
+        <button type="button" class="queryInfo" @click="getInfo($event)">查询</button>
+    </div>
+
+    <!--输入数据-->
+    <p>pH为无量纲，温度单位为摄氏度，其他单位为 mg/L</p>
+    <ul class="inputList">
+        <li>
+            <span>温度</span>:
+            <input type="text" v-model="info.temperature">
+        </li>
+        <li>
+            <span>pH值</span>:
+            <input type="text" v-model="info.ph">
+        </li>
+        <li>
+            <span>溶氧量</span>:
+            <input type="text" v-model="info.dissolved_oxyge">
+        </li>
+        <li>
+            <span>电导率</span>:
+            <input type="text" v-model="info.electrical_conductivity">
+        </li>
+        <li>
+            <span>浊度</span>:
+            <input type="text" v-model="info.turbidity">
+        </li>
+        <li>
+            <span>氨氮</span>:
+            <input type="text" v-model="info.ammontia">
+        </li>
+        <li>
+            <span>叶绿素a</span>:
+            <input type="text" v-model="info.chlorophyll_a">
+        </li>
+        <li>
+            <span>蓝绿藻</span>:
+            <input type="text" v-model="info.blur_green_algae">
+        </li>
+        <li>
+            <span>高锰酸钾指数</span>:
+            <input type="text" v-model="info.permanganate_index">
+        </li>
+        <li>
+            <span>氟化物</span>:
+            <input type="text" v-model="info.fluoride">
+        </li>
+        <li>
+            <span>石油类</span>:
+            <input type="text" v-model="info.pertoleum">
+        </li>
+        <li>
+            <span>五日生化需氧量</span>:
+            <input type="text" v-model="info.bod5">
+        </li>
+    </ul>
+
+    <!--按钮组-->
     <div class="text-center">
-        <button type="button" class="btn btn-default closedel">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
-        <button type="button" data-site="" class="btn btn-info" id="delete">&nbsp;&nbsp;确 认&nbsp;&nbsp;</button>
+        <button type="button" class="btn btn-default closedel" @click="close($event)">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
+        <button type="button" data-site="" class="btn btn-info" @click="save($event)">&nbsp;&nbsp;保 存&nbsp;&nbsp;</button>
     </div>
 </div>
 
@@ -85,60 +180,6 @@
                     <td>{{site.area_name}}</td>
                     <td>
                         <a v-on:click="open(site.site_id,$event)" >[录入]</a>
-                    </td>
-                </tr>
-                <tr class="input-box hide">
-                    <!--data 该站点录入的信息，信息展开的列表-->
-                    <td colspan="9">
-                        <ul class="input-ls form-inline" :id="site.site_id">
-                            <!--电导率-->
-                            <li class="form-group">
-                                <label>电导率：</label>
-                                <span>{{electrical}}</span>
-                                <input type="text" v-model="electrical" class="form-control">
-                            </li>
-                            <!--浊度-->
-                            <li class="form-group">
-                                <label>浊度：</label>
-                                <span>{{turbidity}}</span>
-                                <input type="text" v-model="turbidity" class="form-control">
-                            </li>
-                            <!--叶绿素a-->
-                            <li class="form-group">
-                                <label>叶绿素a：</label>
-                                <span>{{chlorophyll_a}}</span>
-                                <input type="text" v-model="chlorophyll_a" class="form-control">
-                            </li>
-                            <!--蓝绿澡-->
-                            <li class="form-group">
-                                <label>蓝绿藻：</label>
-                                <span>{{blue_green_algae}}</span>
-                                <input type="text" v-model="blue_green_algae" class="form-control">
-                            </li>
-                            <!--氟化物-->
-                            <li class="form-group">
-                                <label>氟化物：</label>
-                                <span>{{fluoride}}</span>
-                                <input type="text" v-model="fluoride" class="form-control">
-                            </li>
-                            <!--石油类-->
-                            <li class="form-group">
-                                <label>石油类：</label>
-                                <span>{{pertoleum}}</span>
-                                <input type="text" v-model="pertoleum" class="form-control">
-                            </li>
-                            <!--五日生化需氧量BOD5-->
-                            <li class="form-group">
-                                <label>五日生化需氧量BOD5：</label>
-                                <span>{{bod5}}</span>
-                                <input type="text" v-model="bod5" class="form-control">
-                            </li>
-                        </ul>
-                        <!--保存录入/取消-->
-                        <div class="text-center">
-                            <input type="button" value="保存" class="btn btn-info">
-                            <input type="button" value="取消" class="btn btn-default">
-                        </div>
                     </td>
                 </tr>
             </template>

@@ -60,5 +60,38 @@ router.post('/getinfo',function (req,res) {
     })
 
 });
+//获取某一个站点数据的时间列表 录入
+router.get('/timeList',function (req,res) {
+    let sid=req.query.siteId;
+    query(sql.info.queryTimeList,sid,function(rows){
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
+    });
+});
+//根据sid和wtime获取数据
+router.post('/queryInfo',function (req,res) {
+    let sid=req.body.sid;
+    let wtime=req.body.wtime;
+    query(sql.info.queryInfoForInput,[sid,wtime],function(rows){
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
+    });
+});
+//根据sid和wtime存入数据
+router.post('/inpInfo',function (req,res) {
+    let infoObj=req.body;
+    let infoArr=[];
+    for(index in infoObj){
+        infoArr.push(infoObj[index]);
+    }
+    console.dir(infoArr);
+    query(sql.info.insetInfo,infoArr,function(rows){
+        if(rows.code=='200'){
+            res.send(rows.msg);
+        }
+    });
+});
 
 module.exports = router;

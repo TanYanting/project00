@@ -8,13 +8,6 @@ var siteVm=new Vue({
     el:'#sitemanage',
     data: {
         datainfo: null,
-        electrical:  null,
-        turbidity:null,
-        chlorophyll_a:null,
-        blue_green_algae:null,
-        fluoride:null,
-        pertoleum:null,
-        bod5:null,
         user: {
             'num': parseInt(user[0]),
             'name': user[1],
@@ -22,10 +15,110 @@ var siteVm=new Vue({
         },
         open:function (sid,event) {
             event.prevent;
+            let target = $(event.target);
+            //把sid传给弹出层对象
+            infoVm.sid = sid;
+            $('.inputbox').removeClass('hide');
+            //查询时间
+            $.ajax({
+                type: 'get',
+                url: '/site/timeList?siteId=' + sid,
+                success: function (timeList) {
+                    console.dir(timeList);
+                    var str="<option value='0'>-请选择-</option>";
+                    for(let i=0;i<timeList.length;i++){
+                        let time=new Date(timeList[i].wtime);
+                        let timeStr=time.toLocaleString();
+                        str+="<option value='"+time+"'>"+timeStr+"</option>";
+                    }
+                    infoVm.option=str;
+                    $("#timeSel").html(str);
+                }
+            });
+        }
+    }
+});
+//录入信息 vue对象
+var infoVm=new Vue({
+    el:'#inputInfo',
+    data:{
+        option:'',
+        sid:0,
+        timeSel:null,
+        timePick:null,
+        timeQuery:null,
+        info:{},
+        tabs:function (val,event) {
+            event.prevent;
             let target=$(event.target);
-            let char=target.parents('tr').next();
-            char.siblings('.chart').addClass('hide');
-            char.hasClass('hide')?(char.removeClass('hide')):(char.addClass('hide'));
+            if(val){
+                $('.add').removeClass('hide');
+                $('.new').addClass('hide');
+               // $("#timeSel").html(infoVm.option);
+            }else{
+                $('.add').addClass('hide');
+                $('.new').removeClass('hide');
+                //清空数据
+                $('.inputList input').val('');
+            }
+            target.parent().addClass('active');
+            target.parent().siblings().removeClass("active");
+        },
+        //获取数据
+        getInfo:function (event) {
+            event.prevent;
+            let target=$(event.target);
+            infoVm.timeQuery=(new Date(target.val())).getTime();
+            debugger;
+            $.ajax({
+                type:'post',
+                url:'/site/queryInfo',
+                data:{sid:infoVm.sid,wtime:infoVm.timeQuery},
+                success:function (info) {
+                    infoVm.info=info[0];
+                }
+            });
+        },
+        save:function (event) {
+            event.prevent;
+            let target=$(event.target);
+            /*sid,temperature,ph,dissolved_oxyge,
+            electrical_conductivity,turbidity,ammontia,
+            chlorophyll_a,blur_green_algae,'+
+            'permanganate_index,fluoride,pertoleum,bod5,wtime*/
+            var infoDate={
+                sid:infoVm.sid,
+                temperature:infoVm.info.temperature,
+                ph:infoVm.info.ph,
+                dissolved_oxyge:infoVm.info.dissolved_oxyge,
+                electrical_conductivity:infoVm.info.electrical_conductivity,
+                turbidity:infoVm.info.turbidity,
+                ammontia:infoVm.info.ammontia,
+                chlorophyll_a:infoVm.info.chlorophyll_a,
+                blur_green_algae:infoVm.info.blur_green_algae,
+                permanganate_index:infoVm.info.permanganate_index,
+                fluoride:infoVm.info.fluoride,
+                pertoleum:infoVm.info.pertoleum,
+                bod5:infoVm.info.bod5,
+                wtime:infoVm.timeQuery
+            }
+            $.ajax({
+                type:'post',
+                url:'/site/inpInfo',
+                data:infoDate,
+                success:function (msg) {
+                    if(msg=='success'){
+                        alert('保存成功');
+                    }
+                }
+            });
+            //关闭弹出层
+            $('.inputbox').addClass('hide');
+        },
+        close:function (event) {
+            event.prevent;
+            //关闭弹出层
+            $('.inputbox').addClass('hide');
         }
     }
 });
