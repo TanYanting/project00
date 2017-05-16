@@ -15,6 +15,14 @@ sql.wuser={
     queryByName:'SELECT * FROM wuser WHERE user_name=?',//根据name查找
     queryAll:'SELECT * FROM wuser'
 }
+//省份
+sql.province={
+    queryAll:'SELECT * FROM province'
+}
+//水系
+sql.water={
+    queryAll:'SELECT * FROM water'
+}
 //监测站点表
 sql.site={
     insert:'INSERT site(site_id,site_name,stype,state,uid,wid,aid，remark) value(?,?,?,?,?,?,?)',
@@ -27,7 +35,9 @@ sql.site={
     delete:'UPDATE site SET del=1 WHERE site_id=?',//非物理删除
     queryById:'SELECT * FROM site WHERE site_id=?',//根据ID查找
     queryByName:'SELECT * FROM site WHERE site_name=?',//根据name查找
-    queryAll:'SELECT * FROM site WHERE del!=1'
+    queryAll:'SELECT * FROM site WHERE del!=1',
+    queryEachProvince:'SELECT site_id,site_name FROM site WHERE aid in (SELECT area_id FROM warea WHERE pid=?)',//每个省有哪些站点
+    queryEachWater:'SELECT site_id,site_name FROM site WHERE wid=?'//每个水系有哪些站点
 }
 //监测站点信息表
 sql.info={
@@ -42,8 +52,10 @@ sql.info={
     queryInfoForInput:'SELECT temperature,ph,dissolved_oxyge,electrical_conductivity,turbidity,ammontia,chlorophyll_a,blur_green_algae,'+
     'permanganate_index,fluoride,pertoleum,bod5 FROM info WHERE sid=? AND wtime=?',
     insetInfo:'INSERT info(sid,temperature,ph,dissolved_oxyge,electrical_conductivity,turbidity,ammontia,chlorophyll_a,blur_green_algae,'+
-        'permanganate_index,fluoride,pertoleum,bod5,wtime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-    //TODO:批量插入
+        'permanganate_index,fluoride,pertoleum,bod5,wtime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+    //按地区查找站点数据
+    queryAreaInfo:'select ph,ammontia,dissolved_oxyge,permanganate_index,wtime FROM info WHERE sid=?'
+
 }
 //监测站点历史状态表
 sql.sitehistory={
