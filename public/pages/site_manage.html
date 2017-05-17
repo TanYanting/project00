@@ -62,7 +62,7 @@
 
     <!--删除站点-->
     <div class="alertbox hide" style="padding:15px;border-radius:5px;box-shadow:0 0 50px #333;z-index: 1001;background:#FFF;position: fixed;top:0;left:0;right:0;bottom:0;margin:auto;width:400px;height:230px">
-        <h3 class="text-center" style="margin-top:10px">编 辑</h3>
+        <h3 class="text-center" style="margin-top:10px">删 除</h3>
         <p class="info" style="text-align: center;height:100px;line-height:100px;">
             确定删除站点 “<span class="sname"></span>”
         </p>
@@ -75,7 +75,7 @@
     <!-------------------正文-------------->
     <div class="container">
         <!--查找-->
-        <div class="search-box">
+        <!--<div class="search-box">
             <form class="form-inline">
                 <div class="form-group">
                     <label for="type">按</label>
@@ -93,7 +93,7 @@
                 </div>
                 <button type="button" class="btn btn-info btn-sm" id="search">&nbsp;&nbsp;查 找&nbsp;&nbsp;</button>
             </form>
-        </div>
+        </div>-->
         <!--数据表格-->
         <div class="table-responsive">
             <!--待定 table-bordered-->
@@ -121,9 +121,8 @@
                         <td>{{site.province_name}}</td>
                         <td>{{site.area_name}}</td>
                         <td>
-                            <a v-on:click="eidt($event)" v-if="user.access>1">[编辑]</a>
-                            <a v-on:click="del($event)" v-if="user.access>2">[删除]</a>
-                            <a v-if="site.user_name==user.name||user.access==9">[录入]</a>
+                            <a v-on:click="eidt($event)" v-if="user.access>=1">[编辑]</a>
+                            <a v-on:click="del($event)" v-if="user.access>=2">[删除]</a>
                         </td>
                     </tr>
                     <tr>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>监测站点管理</title>
+
+    <!-- Bootstrap -->
+    <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <!--font awesome-->
+    <link rel="stylesheet" type="text/css" href="../plugins/font-awesome-4.7.0/css/font-awesome.css"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--mycss-->
+    <link rel="stylesheet" type="text/css" href="../stylesheets/pages.css"/>
+    <!--vue.js-->
+    <script src="../vue/vue.js"></script>
+</head>
+<body>
+<!--编辑框-->
+<div class="dialogbox hide" style="padding:15px;border-radius:5px;box-shadow:0 0 50px #333;z-index: 1001;background:#FFF;position: fixed;top:0;left:0;right:0;bottom:0;margin:auto;width:600px;height:320px">
+    <h3 class="text-center" style="margin-top:10px">编 辑</h3>
+    <form class="form-horizontal eidtform">
+        <div class="form-group">
+            <label for="username" class="col-sm-2 control-label">用户名称</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="user_name" id="username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="user_pwd" class="col-sm-2 control-label">用户密码</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="user_pwd" id="user_pwd">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="user_access" class="col-sm-2 control-label">用户权限</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="user_access" id="user_access">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="text-center">
+                <button type="button" class="btn btn-default closeedit">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
+                <button type="button" data-user="" class="btn btn-info" id="save">&nbsp;&nbsp;保 存&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--删除站点-->
+<div class="alertbox hide" style="padding:15px;border-radius:5px;box-shadow:0 0 50px #333;z-index: 1001;background:#FFF;position: fixed;top:0;left:0;right:0;bottom:0;margin:auto;width:400px;height:230px">
+    <h3 class="text-center" style="margin-top:10px">删 除</h3>
+    <p class="info" style="text-align: center;height:100px;line-height:100px;">
+        确定删除用户 “<span class="uname"></span>”
+    </p>
+    <div class="text-center">
+        <button type="button" class="btn btn-default closedel">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
+        <button type="button" data-user="" class="btn btn-info" id="delete">&nbsp;&nbsp;确 认&nbsp;&nbsp;</button>
+    </div>
+</div>
+
+<!-------------------正文-------------->
+<div class="container">
+    <!--数据表格-->
+    <div class="table-responsive">
+        <!--待定 table-bordered-->
+        <table class="table table-hover">
+            <thead>
+            <tr class="info">
+                <td>序号</td>
+                <td>用户名称</td>
+                <td>用户密码</td>
+                <td>权限</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody id="usermanage">
+            <tr v-for="user in userdata">
+                <td>{{user.user_id}}</td>
+                <td>{{user.user_name}}</td>
+                <td>{{user.user_pwd}}</td>
+                <td>{{user.user_access}}</td>
+                <td>
+                    <a v-on:click="eidt($event)">[编辑]</a>
+                    <a v-on:click="del($event)">[删除]</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9" class="text-right">
+                    共 <b class="recordCound"></b> 条记录 |
+                    每页显示 <b class="pageSize"></b> 条记录 |
+                    <b class="pageNum"></b>/<b class="pageCount"></b> 页
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--上一页下一页-->
+    <nav aria-label="...">
+        <ul class="pager" style="margin:0">
+            <li class="previous disabled"><a href="#"><i class="fa fa-long-arrow-left"></i> 上一页</a></li>
+            <li class="next"><a href="#">下一页 <i class="fa fa-long-arrow-right"></i></a></li>
+        </ul>
+    </nav>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../jQuery/jQuery-2.1.4.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+<!--this page's js-->
+<script src="../javascript/user_manage.js"></script>
+</body>
+</html>

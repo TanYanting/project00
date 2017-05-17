@@ -59,4 +59,46 @@ router.post('/sitelist',function (req,res) {
     });
 });
 
+//主页数据
+router.get('/index',function (req,res) {
+    query(sql.warea.queryAll,'',function(rows){
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
+    });
+});
+router.post('/getph',function (req,res) {
+    var aid=req.body.aid;
+    query(sql.info.queryPhAVG,aid,function(rows){
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
+    });
+});
+router.post('/getammontia',function (req,res) {
+    var aid=req.body.aid;
+    query(sql.info.queryAmmontiaAVG,aid,function(rows){
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
+    });
+});
+router.post('/getpindex',function (req,res) {
+    var aid=req.body.aid;
+    query(sql.info.queryPindexAVG,aid,function(rows){
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
+    });
+});
+router.post('/getoxy',function (req,res) {
+    var aid=req.body.aid;
+    query(sql.info.queryOxyAVG,aid,function(rows){
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
+    });
+});
+
+
 module.exports = router;

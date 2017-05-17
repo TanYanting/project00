@@ -11,7 +11,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var site=require('./routes/site');
-var data=require('./routes/data');
+var data=require('./routes/data')
 
 var app = express();
 

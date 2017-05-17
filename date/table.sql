@@ -233,7 +233,7 @@ INSERT wuser(user_id,user_name,user_pwd,user_access) value(00000000,'admin','123
 
 #创建站点管理的视图
 CREATE VIEW sitemanage AS
-	SELECT site_id,site_name,stype,state,user_name,water_name,province_name,area_name
+	SELECT site_id,site_name,stype,state,user_name,water_name,province_name,area_name,site.del
 	FROM site,wuser,water,warea,province
 	WHERE site.uid=wuser.user_id and site.wid=water.water_id and site.aid=warea.area_id and warea.pid=province.province_id;
 

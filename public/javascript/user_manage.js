@@ -1,10 +1,10 @@
 //获取用户信息
 let user=window.sessionStorage.getItem('userinfo')?window.sessionStorage.getItem('userinfo').split('-'):['-1','','-1'];
 //vue
-var siteVm=new Vue({
-    el:'#sitemanage',
+var userVm=new Vue({
+    el:'#usermanage',
     data: {
-        sitedata: null,
+        userdata: null,
         user: {
             'num': parseInt(user[0]),
             'name': user[1],
@@ -14,21 +14,18 @@ var siteVm=new Vue({
             event.prevent;
             $('.dialogbox').removeClass('hide');
             let target=$(event.target);
-            $('#save').data('site',target.parent().siblings().eq(0).html());
-            $('#sitename').val(target.parent().siblings().eq(1).html());
-            $('#stype').val(target.parent().siblings().eq(2).html());
-            $('#state').val(target.parent().siblings().eq(3).html());
-            $('#username').val(target.parent().siblings().eq(4).html());
+            $('#save').data('user',target.parent().siblings().eq(0).html());
+            $('#username').val(target.parent().siblings().eq(1).html());
+            $('#user_pwd').val(target.parent().siblings().eq(2).html());
+            $('#user_access').val(target.parent().siblings().eq(3).html());
         },
         del:function(event){
             event.prevent;
             $('.alertbox').removeClass('hide');
             let target=$(event.target);
-            //给这行做标记
-            // target.parent().parent().addClass('delete-tr');
-            let sitename=target.parent().siblings().eq(1).html();
-            $('.sname').html(sitename);
-            $('#delete').data('site',target.parent().siblings().eq(0).html());
+            var uname=target.parent().siblings().eq(1).html();
+            $('.uname').html(uname);
+            $('#delete').data('user',target.parent().siblings().eq(0).html());
         }
     }
 });
@@ -44,57 +41,53 @@ var getdata={
     init:function () {
         this.getsitelist();
         /*if(this.pager.pageNum==1){
-            $('.previous').attr('disable',true);
-        }*/
+         $('.previous').attr('disable',true);
+         }*/
         $('.previous').on('click',this.previous);
         $('.next').on('click',this.next);
         $('#save').on('click',this.save);
         $('#delete').on('click',this.delete);
         $('.closeedit').on('click',function () {
             $('.dialogbox').addClass('hide');
-            $('#sitename').val('');
-            $('#stype').val('');
-            $('#state').val('');
             $('#username').val('');
+            $('#user_pwd').val('');
+            $('#user_access').val('');
         });
         $('.closedel').on('click',function () {
             $('.alertbox').addClass('hide');
-            $('.delete-tr').removeClass('delete-tr');
         });
     },
     delete:function () {
         debugger;
-      $('.alertbox').addClass('hide');
-      let site_id=parseInt($('#delete').data('site'));
-      $.ajax({
-          type:'post',
-          data:{site_id:site_id},
-          url:'/site/delete',
-          success:function (msg) {
-              if(msg=='success'){
-                  // $('.delete-tr').remove();
-                  alert('删除成功！');
-                  getdata.getsitelist();
-              }
-          }
-      });
+        $('.alertbox').addClass('hide');
+        let user_id=parseInt($('#delete').data('user'));
+        $.ajax({
+            type:'post',
+            data:{user_id:user_id},
+            url:'/users/delete',
+            success:function (msg) {
+                if(msg=='success'){
+                    alert('删除成功！');
+                    getdata.getsitelist();
+                }
+            }
+        });
     },
     save:function () {
         $('.dialogbox').addClass('hide');
-        let site={};
-        site.site_id=$('#save').data('site');
-    //    TODO:表单验证
+        let user=[];
         var data=$('.eidtform').serializeArray();
-        site.site_name=data[0].value;
-        site.stype=data[1].value;
-        site.state=data[2].value;
-        site.user_name=data[3].value;
+        debugger;
+        user.user_name=data[0].value;
+        user.user_pwd=data[1].value;
+        user.user_access=data[2].value;
+        user.user_id=$('#save').data('user');
         $.ajax({
             type:'post',
-            data:site,
-            url:'/site/updatesite',
+            data:user,
+            url:'/users/updateuser',
             success:function (msg) {
-                alert('修改成功!');
+                alert('修改成功！');
             }
         })
     },
@@ -127,15 +120,15 @@ var getdata={
     getsitelist:function () {
         $.ajax({
             type:'get',
-            url:'/site',
-            success:function (site) {
-                getdata.pager.data=site;
-                getdata.datalist(site);
+            url:'/users',
+            success:function (user) {
+                getdata.pager.data=user;
+                getdata.datalist(user);
             }
         });
     },
-    datalist:function (site) {
-        this.pager.recordCount=site.length;
+    datalist:function (user) {
+        this.pager.recordCount=user.length;
         this.pager.pageCount=Math.ceil(this.pager.recordCount/this.pager.pageSize);
         this.showlist(1);
         $('.recordCound').html(this.pager.recordCount);
@@ -147,7 +140,8 @@ var getdata={
         let start=(pageNum-1)*this.pager.pageSize;
         let end=pageNum*this.pager.pageSize;
         let subdata=this.pager.data.slice(start,end);
-        siteVm.sitedata=subdata;
+        userVm.userdata=subdata;
     }
 }
 getdata.init();
+

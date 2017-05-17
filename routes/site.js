@@ -40,13 +40,20 @@ router.post('/delete',function (req,res) {
     var site_id=req.body.site_id;
     query(sql.site.delete,site_id,function (row) {
         if(row.code=='200'){
-            query(sql.info.deleteSite,site_id,function (rows) {
-                if(rows.code==200){
-                    res.send(rows.msg);
-                }
-            })
+            console.log('站点删除完成！')
         }
-    })
+    });
+    query(sql.info.deleteSite,site_id,function (rows) {
+        if(rows.code==200){
+            console.log('info删除完成！');
+        }
+    });
+    query(sql.sitemanage.del,site_id,function (row) {
+        if(row.code=='200'){
+            console.log('视图删除完成！');
+            res.send(row.msg);
+        }
+    });
 });
 //获取一周的站点数据info
 router.post('/getinfo',function (req,res) {

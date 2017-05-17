@@ -20,55 +20,64 @@
     <!--mycss-->
     <link rel="stylesheet" type="text/css" href="../stylesheets/pages.css"/>
 
-    <!--vue.js-->
-    <script src="../vue/vue.js"></script>
     <!--echarts.js-->
     <script src="../plugins/echart/echarts.js"></script>
+    <script src="../plugins/echart/china.js"></script>
+    <style>
+        #chart{
+            width:100%;
+            height:500px;
+        }
+    </style>
 </head>
 <body>
 <!--container 容器-->
 <div class="container">
     <!--jumbotron-wrapper start 巨幕-->
-    <div class="jumbotron-wrapper">
+    <!--<div class="jumbotron-wrapper" id="baseDate">
         <div class="jumbotron overflow-hidden">
             <div class="row">
                 <div class="col-sm-5 col-xs-12">
-                    <h1 class="text-center stype">III类</h1>
+                    <h1 class="text-center stype">{{level}}类</h1>
                     <h4 class="text-center">水质</h4>
-                    <p class="text-center"><i class="fa fa-map-marker"></i>&nbsp; <span class="area">浙江省湖州市青浦港</span></p>
+                    <p class="text-center"><i class="fa fa-map-marker"></i>&nbsp; <span class="area">{{siteName}}</span></p>
                 </div>
-                <!--网页上的-->
                 <div class="col-sm-3 sm-right">
-                    <h2>水温：<span class="temperature">2</span><i class="fa fa-angle-double-up"></i></h2>
-                    <h2>&nbsp;&nbsp;PH：<span class="ph">2</span><i class="fa fa-angle-double-up"></i></h2>
-                    <h2>气温：<span class="air-temperature">2</span><i class="fa fa-angle-double-up"></i></h2>
+                    <h2>水温：<span class="temperature">{{tem.val}}</span>
+                        <i class="fa"></i></h2>
+                    <h2>&nbsp;&nbsp;PH：<span class="ph">{{ph.val}}</span>
+                        <i class="fa fa-angle-double-up"></i></h2>
+                    <h2>{{itemName}}：<span class="air-temperature">{{itemValue}}</span>
+                        <i class="fa fa-angle-double-up"></i></h2>
                 </div>
-                <!--手机上显示的右半边，采用列表展示-->
             </div>
         </div>
         <div class="xs-right">
             <ul class="list-group">
                 <li class="list-group-item">
                     <span class="badge"><i class="fa fa-angle-double-down"></i></span>
-                    水温：<span class="temperature">2</span>
+                    水温：<span class="temperature">{{tem.val}}</span>
                 </li>
                 <li class="list-group-item">
                     <span class="badge"><i class="fa fa-angle-double-down"></i></span>
-                    &nbsp;&nbsp;PH：<span class="ph">2</span>
+                    &nbsp;&nbsp;PH：<span class="ph">{{ph.val}}</span>
                 </li>
                 <li class="list-group-item">
                     <span class="badge"><i class="fa fa-angle-double-down"></i></span>
-                    气温：<span class="air-temperature">2</span>
+                    {{itemName}}：<span class="air-temperature">{{itemValue}}</span>
                 </li>
             </ul>
         </div>
-    </div>
+    </div>-->
     <!--jumbutron-wrapper end-->
+    <div id="chart"></div>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../jQuery/jQuery-2.1.4.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+<!--index.js首页的脚本文件-->
+<script src="../javascript/index.js"></script>
 </body>
 </html>

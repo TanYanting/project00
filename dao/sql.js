@@ -13,11 +13,16 @@ sql.wuser={
     delete:'DELETE FROM wuser WHERE user_id=?',//删除
     queryById:'SELECT * FROM wuser WHERE user_id=?',//根据ID查找
     queryByName:'SELECT * FROM wuser WHERE user_name=?',//根据name查找
-    queryAll:'SELECT * FROM wuser'
+    queryAll:'SELECT user_id,user_name,user_pwd,user_access FROM wuser',
+    updataAll:'UPDATE wuser SET user_name=?,user_pwd=?,user_access=? WHERE user_id=?'
 }
 //省份
 sql.province={
     queryAll:'SELECT * FROM province'
+}
+//地域
+sql.warea={
+    queryAll:'SELECT area_id,area_name FROM warea'
 }
 //水系
 sql.water={
@@ -37,7 +42,8 @@ sql.site={
     queryByName:'SELECT * FROM site WHERE site_name=?',//根据name查找
     queryAll:'SELECT * FROM site WHERE del!=1',
     queryEachProvince:'SELECT site_id,site_name FROM site WHERE aid in (SELECT area_id FROM warea WHERE pid=?)',//每个省有哪些站点
-    queryEachWater:'SELECT site_id,site_name FROM site WHERE wid=?'//每个水系有哪些站点
+    queryEachWater:'SELECT site_id,site_name FROM site WHERE wid=?',//每个水系有哪些站点
+    queryIndexdata:'SELECT site_id,site_name,stype FROM site WHERE uid=?'
 }
 //监测站点信息表
 sql.info={
@@ -54,8 +60,13 @@ sql.info={
     insetInfo:'INSERT info(sid,temperature,ph,dissolved_oxyge,electrical_conductivity,turbidity,ammontia,chlorophyll_a,blur_green_algae,'+
         'permanganate_index,fluoride,pertoleum,bod5,wtime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
     //按地区查找站点数据
-    queryAreaInfo:'select ph,ammontia,dissolved_oxyge,permanganate_index,wtime FROM info WHERE sid=?'
-
+    queryAreaInfo:'select ph,ammontia,dissolved_oxyge,permanganate_index,wtime FROM info WHERE sid=?',
+    //首页
+    queryInfo:'select temperature,ph,ammontia,dissolved_oxyge,permanganate_index,DISTINCT wtime FROM info WHERE sid=? ORDER BY wtime',
+    queryPhAVG:'select AVG(ph) as avgs from info where sid in(select site_id from site where aid=?)',
+    queryAmmontiaAVG:'select AVG(ammontia) as avgs from info where sid in(select site_id from site where aid=?)',
+    queryPindexAVG:'select AVG(permanganate_index) as avgs from info where sid in(select site_id from site where aid=?)',
+    queryOxyAVG:'select AVG(dissolved_oxyge) as avgs from info where sid in(select site_id from site where aid=?)',
 }
 //监测站点历史状态表
 sql.sitehistory={
@@ -63,7 +74,10 @@ sql.sitehistory={
 }
 //联合查询，批量
 sql.batch={
-    querySite:'SELECT * FROM sitemanage'
+    querySite:'SELECT * FROM sitemanage WHERE del!=1'
+}
+sql.sitemanage={
+    del:' UPDATE sitemanage set del=1 WHERE site_id=?;'
 }
 
 module.exports = sql;
