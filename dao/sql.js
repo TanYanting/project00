@@ -14,7 +14,8 @@ sql.wuser={
     queryById:'SELECT * FROM wuser WHERE user_id=?',//根据ID查找
     queryByName:'SELECT * FROM wuser WHERE user_name=?',//根据name查找
     queryAll:'SELECT user_id,user_name,user_pwd,user_access FROM wuser',
-    updataAll:'UPDATE wuser SET user_name=?,user_pwd=?,user_access=? WHERE user_id=?'
+    updataAll:'UPDATE wuser SET user_name=?,user_pwd=?,user_access=? WHERE user_id=?',
+    nextId:'SELECT MAX(user_id)+1 as user_id FROM wuser'
 }
 //省份
 sql.province={
@@ -62,11 +63,7 @@ sql.info={
     //按地区查找站点数据
     queryAreaInfo:'select ph,ammontia,dissolved_oxyge,permanganate_index,wtime FROM info WHERE sid=?',
     //首页
-    queryInfo:'select temperature,ph,ammontia,dissolved_oxyge,permanganate_index,DISTINCT wtime FROM info WHERE sid=? ORDER BY wtime',
-    queryPhAVG:'select AVG(ph) as avgs from info where sid in(select site_id from site where aid=?)',
-    queryAmmontiaAVG:'select AVG(ammontia) as avgs from info where sid in(select site_id from site where aid=?)',
-    queryPindexAVG:'select AVG(permanganate_index) as avgs from info where sid in(select site_id from site where aid=?)',
-    queryOxyAVG:'select AVG(dissolved_oxyge) as avgs from info where sid in(select site_id from site where aid=?)',
+    queryInfo:'select temperature,ph,ammontia,dissolved_oxyge,permanganate_index,DISTINCT wtime FROM info WHERE sid=? ORDER BY wtime'
 }
 //监测站点历史状态表
 sql.sitehistory={
@@ -78,6 +75,13 @@ sql.batch={
 }
 sql.sitemanage={
     del:' UPDATE sitemanage set del=1 WHERE site_id=?;'
+}
+sql.avginfo={
+    queryPh:'select AVG(ph) as ph from avginfo where site_id in (select site_id from site where aid=?)',
+    queryAmmontia:'select AVG(ammontia) as ammontia from avginfo where site_id in (select site_id from site where aid=?)',
+    queryOxy:'select AVG(oxy) as oxy form avginfo where site_id in (select site_id from site where aid=?)',
+    queryPindex:'select AVG(pindex) as pindex from avginfo where site_id in (select site_id from site where aid=?)',
+    queryAllAvg:'select area_name,AVG(ph)*40 as ph,AVG(ammontia)*200 as ammontia,AVG(oxy)*20 as oxy,AVG(pindex)*40 as pindex from avginfo group by aid'
 }
 
 module.exports = sql;

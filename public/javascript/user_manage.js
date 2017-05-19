@@ -1,5 +1,22 @@
 //获取用户信息
 let user=window.sessionStorage.getItem('userinfo')?window.sessionStorage.getItem('userinfo').split('-'):['-1','','-1'];
+$(function () {
+    $('.addUser button').on('click',function (e) {
+        e.preventDefault();
+        var target=$(e.target);
+        $('.dialogbox').removeClass('hide');
+        $('#add').removeClass('hide');
+        $('#save').addClass('hide');
+        $.ajax({
+            type:'get',
+            url:'/users/getid',
+            success:function (req) {
+                debugger;
+                $('#add').data('user',req[0].user_id);
+            }
+        })
+    });
+});
 //vue
 var userVm=new Vue({
     el:'#usermanage',
@@ -13,6 +30,8 @@ var userVm=new Vue({
         eidt:function (event) {
             event.prevent;
             $('.dialogbox').removeClass('hide');
+            $('#add').addClass('hide');
+            $('#save').removeClass('hide');
             let target=$(event.target);
             $('#save').data('user',target.parent().siblings().eq(0).html());
             $('#username').val(target.parent().siblings().eq(1).html());
@@ -56,6 +75,26 @@ var getdata={
         $('.closedel').on('click',function () {
             $('.alertbox').addClass('hide');
         });
+        $('#add').on('click',this.add);
+    },
+    add:function () {
+        $('.dialogbox').addClass('hide');
+        var user={};
+        var data=$('.eidtform').serializeArray();
+        debugger;
+        user.user_name=data[0].value;
+        user.user_pwd=data[1].value;
+        user.user_access=data[2].value;
+        user.user_id=parseInt($('#add').data('user'));
+        $.ajax({
+            type:'post',
+            data:user,
+            url:'/users/adduser',
+            success:function (msg) {
+                alert('新增成功！');
+                getdata.getsitelist();
+            }
+        })
     },
     delete:function () {
         debugger;
@@ -75,19 +114,20 @@ var getdata={
     },
     save:function () {
         $('.dialogbox').addClass('hide');
-        let user=[];
+        let user={};
         var data=$('.eidtform').serializeArray();
         debugger;
         user.user_name=data[0].value;
         user.user_pwd=data[1].value;
         user.user_access=data[2].value;
-        user.user_id=$('#save').data('user');
+        user.user_id=parseInt($('#save').data('user'));
         $.ajax({
             type:'post',
             data:user,
             url:'/users/updateuser',
             success:function (msg) {
                 alert('修改成功！');
+                getdata.getsitelist();
             }
         })
     },

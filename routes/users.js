@@ -35,5 +35,23 @@ router.post('/updateuser',function (req,res) {
         }
     });
 });
-
+router.post('/adduser',function (req,res) {
+    var arr=[];
+    arr.push(req.body.user_id);
+    arr.push(req.body.user_name);
+    arr.push(req.body.user_pwd);
+    arr.push(req.body.user_access);
+    query(sql.wuser.insert,arr,function(rows){
+        if(rows.code=='200'){
+            res.send(rows.msg);
+        }
+    });
+});
+router.get('/getid',function (req,res) {
+    query(sql.wuser.nextId,'',function (rows) {
+        if(rows.code=='200'){
+            res.send(rows.data);
+        }
+    })
+});
 module.exports = router;

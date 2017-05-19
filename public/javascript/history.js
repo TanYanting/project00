@@ -3,6 +3,22 @@
  */
 //获取用户信息
 let user=window.sessionStorage.getItem('userinfo')?window.sessionStorage.getItem('userinfo').split('-'):['-1','','-1'];
+$(function () {
+    $('.nav li').on('click',function (e) {
+        var target=e.target.tagName=='li'?$(e.target):$(e.target).parent();
+        target.siblings().removeClass('active');
+        $('select.sel').addClass('hide');
+        target.addClass('active');
+        var sel=target.data('sel');
+        debugger;
+        if(sel=='water'){
+            $('#water').removeClass('hide');
+        }else{
+            $('#province').removeClass('hide');
+        }
+    });
+    psite(1);
+});
 //创建联动菜单 地域
 $.ajax({
     type:'get',
@@ -65,13 +81,13 @@ var lineStyle = {
 };
 
 option = {
-    backgroundColor: '#FFF',
+    backgroundColor: '#333',
     legend: {
         bottom: 30,
         data: [],
         itemGap: 20,
         textStyle: {
-            color: '#333',
+            color: '#FFF',
             fontSize: 14
         }
     },
@@ -127,7 +143,7 @@ option = {
             nameLocation: 'end',
             nameGap: 20,
             nameTextStyle: {
-                color: '#333',
+                color: '#FFF',
                 fontSize: 12
             },
             axisLine: {
@@ -145,7 +161,7 @@ option = {
             },
             axisLabel: {
                 textStyle: {
-                    color: '#333'
+                    color: '#FFF'
                 }
             }
         }
@@ -171,6 +187,7 @@ function psite(pid) {
                     data:{sid:item.site_id},
                     success:function(res){
                         var dataArr=[];
+                        res=res.slice(0,31);
                         res.forEach(function(site,i){
                             //添加时间和等级数据
                             dataArr.push(maxType(site,i));

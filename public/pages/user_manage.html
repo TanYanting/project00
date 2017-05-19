@@ -8,8 +8,8 @@
 
     <!-- Bootstrap -->
     <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <!--font awesome-->
-    <link rel="stylesheet" type="text/css" href="../plugins/font-awesome-4.7.0/css/font-awesome.css"/>
+    <!--font icon-->
+    <link rel="stylesheet" href="../plugins/fontclass/iconfont.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,6 +21,27 @@
     <link rel="stylesheet" type="text/css" href="../stylesheets/pages.css"/>
     <!--vue.js-->
     <script src="../vue/vue.js"></script>
+    <style>
+        .addUser{
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .addUser button{
+            width:200px;
+            height:30px;
+            border-radius: 6px;
+            border:1px solid #337ab7;
+            color:#333;
+            background: rgba(82, 146, 183, 0.2);
+            text-align: center;
+            box-shadow: none;
+            outline: none;
+        }
+        .addUser button:hover{
+            color:#337ab7;
+            background: rgba(51,122,183,0.2);
+        }
+    </style>
 </head>
 <body>
 <!--编辑框-->
@@ -48,7 +69,8 @@
         <div class="form-group">
             <div class="text-center">
                 <button type="button" class="btn btn-default closeedit">&nbsp;&nbsp;取 消&nbsp;&nbsp;</button>&nbsp;&nbsp;
-                <button type="button" data-user="" class="btn btn-info" id="save">&nbsp;&nbsp;保 存&nbsp;&nbsp;</button>
+                <button type="button" data-user="" class="btn btn-info" id="save" class="hide">&nbsp;&nbsp;保 存&nbsp;&nbsp;</button>
+                <button type="button" data-user="" class="btn btn-info" id="add" class="hide">&nbsp;&nbsp;保 存&nbsp;&nbsp;</button>
             </div>
         </div>
     </form>
@@ -68,6 +90,9 @@
 
 <!-------------------正文-------------->
 <div class="container">
+    <div class="addUser">
+        <button >新增用户</button>
+    </div>
     <!--数据表格-->
     <div class="table-responsive">
         <!--待定 table-bordered-->
@@ -88,8 +113,8 @@
                 <td>{{user.user_pwd}}</td>
                 <td>{{user.user_access}}</td>
                 <td>
-                    <a v-on:click="eidt($event)">[编辑]</a>
-                    <a v-on:click="del($event)">[删除]</a>
+                    <a v-on:click="eidt($event)" class="iconfont icon-xiugai"></a>
+                    <a v-on:click="del($event)" class="iconfont icon-shanchu"></a>
                 </td>
             </tr>
             <tr>
@@ -105,8 +130,8 @@
     <!--上一页下一页-->
     <nav aria-label="...">
         <ul class="pager" style="margin:0">
-            <li class="previous disabled"><a href="#"><i class="fa fa-long-arrow-left"></i> 上一页</a></li>
-            <li class="next"><a href="#">下一页 <i class="fa fa-long-arrow-right"></i></a></li>
+            <li class="previous disabled"><a href="#"><i class="iconfont icon-shangyiye"></i> 上一页</a></li>
+            <li class="next"><a href="#">下一页 <i class="iconfont icon-xiayiye"></i></a></li>
         </ul>
     </nav>
 </div>

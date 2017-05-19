@@ -8,8 +8,8 @@
 
     <!-- Bootstrap -->
     <link href="../bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <!--font awesome-->
-    <link rel="stylesheet" type="text/css" href="../plugins/font-awesome-4.7.0/css/font-awesome.css"/>
+    <!--font icon-->
+    <link rel="stylesheet" href="../plugins/fontclass/iconfont.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,6 +22,9 @@
     <!--vue.js-->
     <script src="../vue/vue.js"></script>
     <style>
+        .add,.new{
+            margin-top:15px;
+        }
         .inputbox{
             padding:15px;
             border-radius:5px;
@@ -49,6 +52,17 @@
             margin:0;
             box-sizing: border-box;
         }
+        .nav a{
+            color:#666;
+        }
+        .nav .active a{
+            color:#333;
+            font-weight: 500;
+        }
+        .info{
+            font-size: 12px;
+            color:#666666;
+        }
     </style>
 </head>
 <body>
@@ -67,11 +81,11 @@
     <!--新增信息-->
     <div class="new hide">
         <input type="datetime-local" v-model="timePick" class="form-control dateTime" id="dateTime">
-        <button type="button" class="queryInfo" @click="getInfo($event)">查询</button>
+        <!--<button type="button" class="queryInfo" @click="getInfo($event)">查询</button>-->
     </div>
 
     <!--输入数据-->
-    <p>pH为无量纲，温度单位为摄氏度，其他单位为 mg/L</p>
+    <p class="info">pH为无量纲，温度单位为摄氏度，其他单位为 mg/L</p>
     <ul class="inputList">
         <li>
             <span>温度</span>:
@@ -132,7 +146,7 @@
 
 <!-------------------正文-------------->
 <div class="container">
-    <!--查找-->
+    <!--查找
     <div class="search-box">
         <form class="form-inline">
             <div class="form-group">
@@ -150,7 +164,7 @@
             </div>
             <button type="button" class="btn btn-info btn-sm" id="search">&nbsp;&nbsp;查 找&nbsp;&nbsp;</button>
         </form>
-    </div>
+    </div>-->
     <!--数据表格-->
     <div class="table-responsive">
         <!--待定 table-bordered-->
@@ -179,7 +193,7 @@
                     <td>{{site.province_name}}</td>
                     <td>{{site.area_name}}</td>
                     <td>
-                        <a v-on:click="open(site.site_id,$event)" >[录入]</a>
+                        <a v-on:click="open(site.site_id,$event)" class="iconfont icon-xiangxi"></a>
                     </td>
                 </tr>
             </template>
@@ -196,8 +210,8 @@
     <!--上一页下一页-->
     <nav aria-label="...">
         <ul class="pager" style="margin:0">
-            <li class="previous disabled"><a href="#"><i class="fa fa-long-arrow-left"></i> 上一页</a></li>
-            <li class="next"><a href="#">下一页 <i class="fa fa-long-arrow-right"></i></a></li>
+            <li class="previous disabled"><a href="#"><i class="icon-shangyiye iconfont"></i> 上一页</a></li>
+            <li class="next"><a href="#">下一页 <i class="iconfont icon-xiayiye"></i></a></li>
         </ul>
     </nav>
 </div>

@@ -3,7 +3,7 @@ var ammontiaData=[];
 var pindexData=[];
 var oxyData=[];
 
-var phData = [
+/*var phData = [
     {name: '海门', value: 9},
     {name: '鄂尔多斯', value: 12},
     {name: '招远', value: 12},
@@ -194,8 +194,7 @@ var phData = [
     {name: '合肥', value: 229},
     {name: '武汉', value: 273},
     {name: '大庆', value: 279}
-];
-
+];*/
 var geoCoordMap = {
     '海门':[121.15,31.89],
     '鄂尔多斯':[109.781327,39.608266],
@@ -394,7 +393,6 @@ var convertData = function (data) {
     for (var i = 0; i < data.length; i++) {
         var geoCoord = geoCoordMap[data[i].name];
         if (geoCoord) {
-            debugger;
             res.push({
                 name: data[i].name,
                 value: geoCoord.concat(data[i].value)
@@ -420,7 +418,7 @@ option = {
         orient: 'vertical',
         y: 'bottom',
         x:'right',
-        data:['pH','氨氮','高锰酸钾指数','溶氧量'],
+        data:['pH','氨氮','高锰酸盐指数','溶氧量'],
         textStyle: {
             color: '#fff'
         }
@@ -472,7 +470,7 @@ option = {
             name: '氨氮',
             type: 'scatter',
             coordinateSystem: 'geo',
-            data: convertData(ammontiaData),
+            data: [],
             symbolSize: function (val) {
                 return val[2] / 10;
             },
@@ -493,10 +491,10 @@ option = {
             }
         },
         {
-            name: '高锰酸钾指数',
+            name: '高锰酸盐指数',
             type: 'scatter',
             coordinateSystem: 'geo',
-            data: convertData(pindexData),
+            data: [],
             symbolSize: function (val) {
                 return val[2] / 10;
             },
@@ -520,7 +518,7 @@ option = {
             name: '溶氧量',
             type: 'scatter',
             coordinateSystem: 'geo',
-            data: convertData(oxyData),
+            data: [],
             symbolSize: function (val) {
                 return val[2] / 10;
             },
@@ -544,66 +542,36 @@ option = {
 };
 
 var myChart = echarts.init(document.getElementById('chart'));
-
+// myChart.setOption(option);
 $.ajax({
     type:'get',
     url:'/data/index',
     success:function (res) {
-        //查找所以的aid并对每一个aid查找info信息，算平均值
         res.forEach(function (item,i) {
-            let dataP={};
-            let dataA={};
-            let dataPI={};
-            let dataO={};
-            dataP.name=item.area_name;
-            dataA.name=item.area_name;
-            dataPI.name=item.area_name;
-            dataO.name=item.area_name;
-            $.ajax({
-                type:'post',
-                url:'/data/getph',
-                data:{aid:item.area_id},
-                success:function (res) {
-                    dataP.value=res[0].avgs;
-                    dataP.value&&phData.push(dataP);
-                }
+            phData.push({
+                name:item.area_name,
+                value:item.ph
             });
-            $.ajax({
-                type:'post',
-                url:'/data/getpindex',
-                data:{aid:item.area_id},
-                success:function (res) {
-                    dataPI.value=res[0].avgs;
-                    dataPI.value&&pindexData.push(dataPI);
-                }
+            ammontiaData.push({
+                name:item.area_name,
+                value:item.ammontia
             });
-            $.ajax({
-                type:'post',
-                url:'/data/getammontia',
-                data:{aid:item.area_id},
-                success:function (res) {
-                    dataA.value=res[0].avgs;
-                    dataA.value&&ammontiaData.push(dataA);
-                }
+            pindexData.push({
+                name:item.area_name,
+                value:item.pindex
             });
-            $.ajax({
-                type:'post',
-                url:'/data/getoxy',
-                data:{aid:item.area_id},
-                success:function (res) {
-                    dataO.value=res[0].avgs;
-                    dataO.value&&oxyData.push(dataO);
-                }
+            oxyData.push({
+                name:item.area_name,
+                value:item.oxy
             });
-            if(i==res.length-1){
-                option.series[0].data=convertData(phData);
-                option.series[1].data=convertData(ammontiaData);
-                option.series[2].data=convertData(pindexData);
-                option.series[3].data=convertData(oxyData);
-                console.dir(phData);
-                myChart.setOption(option);
-            }
         });
+    },
+    complete:function(){
+        option.series[0].data=convertData(phData);
+        option.series[1].data=convertData(ammontiaData);
+        option.series[2].data=convertData(pindexData);
+        option.series[3].data=convertData(oxyData);
+        myChart.setOption(option);
     }
 });
 
